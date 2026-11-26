@@ -1,3 +1,6 @@
+import { ComponentsPage } from "./pages/Components/ComponentsPage";
+import { ThemesPage } from "./pages/Themes/ThemesPage";
+import { FontsPage } from "./pages/Fonts/FontsPage";
 import { matchRoutes, Navigate, useLocation, useRoutes, type RouteObject } from "react-router-dom";
 import { AppLayout } from "./components/AppLayout";
 import { DashboardPage } from "./pages/Dashboard/DashboardPage";
@@ -23,6 +26,9 @@ const pages = [
     handle: { breadcrumb: "Dashboard" },
     children: [
       { index: true, element: <DashboardPage /> },
+      { path: "fonts", element: <FontsPage />, handle: { breadcrumb: "Fonts" } },
+      { path: "themes", element: <ThemesPage />, handle: { breadcrumb: "Themes" } },
+      { path: "components", element: <ComponentsPage />, handle: { breadcrumb: "Components" } },
       { path: "writing-components", element: <WritingComponentsPage />, handle: { breadcrumb: "Writing Components" } },
       { path: "preferences", element: <PreferencesPage />, handle: { breadcrumb: "Preferences" } }
     ]

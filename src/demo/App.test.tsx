@@ -24,6 +24,13 @@ function renderApp(initialEntries = ["/"]) {
   );
 }
 
+it.each(["Fonts", "Themes", "Components"])("gives %s a focused page instead of the bulk dashboard", (name) => {
+  renderApp([`/${name.toLowerCase()}`]);
+  expect(screen.getByRole("heading", { level: 1, name })).toBeInTheDocument();
+  expect(screen.queryByRole("region", { name: "Writing features" })).not.toBeInTheDocument();
+  if (name !== "Components") expect(screen.queryByRole("region", { name: "General Components" })).not.toBeInTheDocument();
+});
+
 it("lets Image handle the toolbar logo fallback", () => {
   renderApp();
   fireEvent.error(screen.getByRole("img", { name: "Moxules logo" }));
@@ -136,7 +143,7 @@ it("places the menu beside the navbar theme toggle and navigates with the left d
     fireEvent.click(within(drawer).getByRole("link", { name: "Components" }));
     act(() => vi.advanceTimersByTime(240));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(screen.getByTestId("location").textContent).toBe("/#general-components");
+    expect(screen.getByTestId("location").textContent).toBe("/components");
     expect(trigger).toHaveFocus();
   } finally {
     vi.useRealTimers();
@@ -257,7 +264,7 @@ it("shows the Markdown editor on Writing Components and reloads a saved post", a
   const title = screen.getByRole("textbox", { name: "Title" });
   expect(title).toHaveValue("A little story");
   expect(title.compareDocumentPosition(screen.getByRole("textbox", { name: "Post content" })) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-  expect(screen.getByRole("heading", { name: "Markdown Editor" })).toBeInTheDocument();
+  expect(screen.getByRole("textbox", { name: "Post content" })).toBeInTheDocument();
   const markdown = "# My saved post\n\n**A small story.**";
   fireEvent.change(screen.getByRole("textbox", { name: "Post content" }), { target: { value: markdown } });
   fireEvent.click(screen.getByRole("button", { name: "Save" }));

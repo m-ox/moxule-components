@@ -14,6 +14,11 @@ Component library for m-ox to use.
 
 ## Demo routing and pages
 
+`/` is the bulk showcase. The menu opens focused `/fonts` (one typography
+specimen), `/themes` (one palette preview), and `/components` (interactive controls)
+pages. Writing uses one title-and-editor workspace, while Preferences stays a
+compact settings form.
+
 The demo uses React Router with `BrowserRouter` in `src/demo/main.tsx`.
 `App` composes `DemoProvider` and `NavRouter`. Dashboard is the home page at `/`.
 Older `/dashboard` URLs redirect home, preserving query strings and section

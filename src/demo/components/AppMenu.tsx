@@ -14,9 +14,9 @@ export function AppMenu() {
       <Drawer id={drawerId} title="Menu" description="Explore the dashboard." open={open} onOpenChange={setOpen} side="left">
         <nav aria-label="Main navigation" className="mx-demo-drawer-links">
           <Link asChild onClick={() => setOpen(false)}><RouterLink to="/">Dashboard</RouterLink></Link>
-          <Link asChild onClick={() => setOpen(false)}><RouterLink to="/#font-styles">Fonts</RouterLink></Link>
-          <Link asChild onClick={() => setOpen(false)}><RouterLink to="/#theme-colors">Themes</RouterLink></Link>
-          <Link asChild onClick={() => setOpen(false)}><RouterLink to="/#general-components">Components</RouterLink></Link>
+          <Link asChild onClick={() => setOpen(false)}><RouterLink to="/fonts">Fonts</RouterLink></Link>
+          <Link asChild onClick={() => setOpen(false)}><RouterLink to="/themes">Themes</RouterLink></Link>
+          <Link asChild onClick={() => setOpen(false)}><RouterLink to="/components">Components</RouterLink></Link>
           <Link asChild onClick={() => setOpen(false)}><RouterLink to="/writing-components">Writing Components</RouterLink></Link>
           <Link asChild onClick={() => setOpen(false)}><RouterLink to="/preferences">Preferences</RouterLink></Link>
         </nav>

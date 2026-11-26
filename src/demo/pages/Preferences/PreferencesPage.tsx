@@ -9,7 +9,7 @@ export function PreferencesPage() {
   const { theme, setTheme, fontStyle, setFontStyle, size, setSize, setMode } = useDemoPreferences();
   return (
     <Section title="Preferences" headingLevel="h1" headingProps={{ className: "mx-demo-title" }}
-      description="A few small changes to make things feel like you." className="mx-demo-stack">
+      description="A few small changes to make things feel like you." className="mx-demo-focused-page">
       <Card aria-label="Appearance preferences" className="mx-demo-preferences-card">
         <div className="mx-demo-preferences-fields">
           <div>

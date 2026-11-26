@@ -151,6 +151,16 @@ body,
 .mx-demo-custom-banner { --mx-banner-accent: #5f4a89; }
 
 .mx-demo-preferences-card { display: grid; gap: 1.25rem; padding: 1.5rem; }
+.mx-demo-focused-page { max-width: 44rem; gap: 1rem; }
+.mx-demo-font-specimen { display: grid; gap: 1.5rem; padding: clamp(1.5rem, 4vw, 3rem); }
+.mx-demo-specimen-title { font-size: calc(2.5rem * var(--mx-font-scale, 1)); line-height: 1.15; }
+.mx-demo-theme-specimen, .mx-demo-writing-workspace { display: grid; gap: 1.5rem; padding: 1.5rem; }
+.mx-demo-palette { display: grid; grid-template-columns: repeat(4, 1fr); height: 5rem; gap: 0.5rem; }
+.mx-demo-palette span { border-radius: var(--mx-panel-radius, 4px 18px 4px 18px); }
+.mx-demo-palette span:nth-child(1) { background: var(--mx-button-primary-bg); }
+.mx-demo-palette span:nth-child(2) { background: var(--mx-button-secondary-bg); }
+.mx-demo-palette span:nth-child(3) { background: var(--mx-color-surface); }
+.mx-demo-palette span:nth-child(4) { background: var(--mx-color-text); }
 .mx-demo-preferences-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: 1rem; }
 .mx-demo-preferences-fields .mx-dropdown-wrapper { width: 100%; }
 .mx-demo-preferences-fields .mx-dropdown { width: 100%; }
