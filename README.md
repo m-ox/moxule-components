@@ -378,6 +378,23 @@ Tests cover accessible names, descriptions, focus, disabled behavior, selection,
 
 Buttons use their theme's primary, secondary, or ghost hover colors, including explicit per-button theme colors. Dropdowns gain a soft themed fill on hover, and radio and checkbox hit areas gain a matching tint. Disabled controls keep their resting appearance, focus rings remain visible, and the transitions respect reduced-motion preferences.
 
+## Tooltip
+
+`Tooltip` adds airy, themed help to one focusable element or component that
+forwards `aria-describedby`.
+
+```tsx
+<Tooltip content="Save the current Markdown draft.">
+  <Button onClick={save}>Save</Button>
+</Tooltip>
+```
+
+Hover opens after 250ms; keyboard focus opens immediately. Escape dismisses
+without moving focus. Existing descriptions and handlers are preserved, and
+the pointer can move onto the tooltip. `side="top"`/`"bottom"`, `delay`, and
+`disabled` customize behavior. The borderless fill fades gently in/out and
+respects reduced motion. Allow overflow around the inline wrapper.
+
 ## Modal
 
 `Modal` is a centered, controlled dialog with the same keyboard, focus, scroll

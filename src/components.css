@@ -638,6 +638,35 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+.mx-tooltip { position: relative; display: inline-flex; max-width: 100%; }
+.mx-tooltip-content {
+  position: absolute; left: 0; z-index: 150;
+  width: max-content; max-width: min(18rem, calc(100vw - 1.5rem));
+  box-sizing: border-box; padding: 0.65rem 0.85rem;
+  border: 0; border-radius: 4px 12px 4px 12px; box-shadow: none;
+  background: var(--mx-button-secondary-bg, #d6deea);
+  color: var(--mx-button-secondary-text, #23416a);
+  font-family: var(--mx-font-body, sans-serif);
+  font-size: calc(0.8rem * var(--mx-font-scale, 1)); line-height: 1.5;
+  font-weight: 400; font-style: normal; text-align: left; overflow-wrap: anywhere;
+  transform: translateX(var(--mx-tooltip-shift, 0px));
+  animation: mx-tooltip-enter 140ms ease-out both;
+}
+.mx-tooltip-content[data-mx-side="top"] { bottom: calc(100% + 0.45rem); }
+.mx-tooltip-content[data-mx-side="bottom"] { top: calc(100% + 0.45rem); }
+.mx-tooltip-content::after { content: ""; position: absolute; left: 0; right: 0; height: 0.5rem; }
+.mx-tooltip-content[data-mx-side="top"]::after { top: 100%; }
+.mx-tooltip-content[data-mx-side="bottom"]::after { bottom: 100%; }
+.mx-tooltip-content[data-mx-state="closing"] { animation: mx-tooltip-exit 140ms ease-in both; pointer-events: none; }
+@keyframes mx-tooltip-enter {
+  from { opacity: 0; transform: translate(var(--mx-tooltip-shift, 0px), 3px); }
+  to { opacity: 1; transform: translate(var(--mx-tooltip-shift, 0px), 0); }
+}
+@keyframes mx-tooltip-exit {
+  from { opacity: 1; transform: translate(var(--mx-tooltip-shift, 0px), 0); }
+  to { opacity: 0; transform: translate(var(--mx-tooltip-shift, 0px), 3px); }
+}
+
 .mx-page-shell[data-mx-footer-offset="xs"] { padding-bottom: 0.5rem; }
 .mx-layout[data-mx-margin="xs"] { padding-inline: 0.5rem; }
 .mx-page-shell[data-mx-footer-offset="sm"] { padding-bottom: 0.75rem; }
@@ -662,6 +691,7 @@
 .mx-theme-toggle:focus, .mx-menu-button:focus { outline-color: currentColor; }
 
 @media (prefers-reduced-motion: reduce) {
+  .mx-tooltip-content { animation: none; }
   .mx-drawer, .mx-drawer::backdrop, .mx-modal, .mx-modal::backdrop { animation: none !important; }
   .mx-banner[data-mx-dismissing="true"], .mx-nudge { animation: none; }
   .mx-button, .mx-dropdown, .mx-radio-control::before, .mx-checkbox-control::before,

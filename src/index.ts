@@ -1,5 +1,8 @@
 import "./styles.css";
 
+export { Tooltip } from "./components/Tooltip/Tooltip";
+export type { TooltipProps } from "./components/Tooltip/Tooltip";
+
 export { Modal } from "./components/Modal/Modal";
 export type { ModalProps, ModalSize } from "./components/Modal/Modal";
 export { Drawer } from "./components/Drawer/Drawer";

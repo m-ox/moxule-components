@@ -1,0 +1,17 @@
+Tooltip Props
+
+- children (required): one element/component that forwards aria-describedby.
+- content (required): short descriptive, noninteractive React content.
+- side: top (default) | bottom. Flips near viewport edges when needed.
+- delay: hover delay in milliseconds (default 250). Focus opens immediately.
+- disabled: disables the tooltip without disabling its child.
+- Native wrapper span props, sx/style, class/className are supported.
+
+Preserves existing child descriptions, event handlers, and accessible names.
+Shows role=tooltip and connects it through aria-describedby while visible.
+Escape dismisses help without moving focus. Hover/focus can keep it open, and
+the pointer can move onto the tooltip. Pending timers/listeners are cleaned up.
+
+Uses a light, airy themed fill, comfortable spacing, no border/shadow, and a
+delicate 140ms fade in/out. Reduced motion skips the animation. Tooltip content
+positions within the inline wrapper; ancestors should allow overflow.
