@@ -716,6 +716,18 @@
 .mx-text-input:focus { outline: 2px solid currentColor; outline-offset: 2px; }
 .mx-text-input:disabled { opacity: 0.5; cursor: not-allowed; }
 .mx-text-input::placeholder { color: inherit; opacity: 0.65; }
+.mx-text-area { min-height: 7rem; resize: vertical; }
+.mx-file-upload {
+  width: 100%; min-width: 0; box-sizing: border-box; padding: 0.65rem;
+  border: 0; border-radius: var(--mx-panel-radius, 4px 18px 4px 18px); box-shadow: none;
+  background: var(--mx-page-shell-bg, #f7f7f7); color: var(--mx-color-text, #1d3558);
+  font: inherit; font-size: calc(0.95rem * var(--mx-font-scale, 1)); line-height: 1.5;
+}
+.mx-file-upload::file-selector-button { border: 0; border-radius: 8px; padding: 0.5rem 0.75rem; margin-right: 0.75rem; background: var(--mx-button-primary-bg, #3f618f); color: var(--mx-button-primary-text, #ffffff); font: inherit; cursor: pointer; transition: background-color 160ms ease; }
+.mx-file-upload:hover:not(:disabled)::file-selector-button { background: var(--mx-button-primary-bg-hover, #36547c); }
+.mx-file-upload:focus { outline: 2px solid currentColor; outline-offset: 2px; background: var(--mx-button-secondary-bg, #d6deea); }
+.mx-file-upload:disabled { opacity: 0.5; cursor: not-allowed; }
+.mx-file-upload:disabled::file-selector-button { cursor: not-allowed; }
 
 .mx-markdown {
   color: var(--mx-color-text, #1d3558);
@@ -796,6 +808,7 @@
 .mx-theme-toggle:focus, .mx-menu-button:focus { outline-color: currentColor; }
 
 @media (prefers-reduced-motion: reduce) {
+  .mx-file-upload::file-selector-button { transition: none; }
   .mx-tooltip-content { animation: none; }
   .mx-drawer, .mx-drawer::backdrop, .mx-modal, .mx-modal::backdrop { animation: none !important; }
   .mx-banner[data-mx-dismissing="true"], .mx-nudge { animation: none; }

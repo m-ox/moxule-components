@@ -2,6 +2,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { Card, Link, Section } from "../../../index";
 import { MarkdownEditorExample } from "./sections/MarkdownEditorExample";
 import { TitleInputExample } from "./sections/TitleInputExample";
+import { WritingFieldsExample } from "./sections/WritingFieldsExample";
 
 export function WritingComponentsPage() {
   return (
@@ -14,6 +15,7 @@ export function WritingComponentsPage() {
     >
       <Card className="mx-demo-writing-workspace">
         <TitleInputExample />
+        <WritingFieldsExample />
         <MarkdownEditorExample />
       </Card>
       <Link asChild><RouterLink to="/">Back to Dashboard</RouterLink></Link>

@@ -1,5 +1,9 @@
 import "./styles.css";
 
+export { TextArea } from "./components/TextArea/TextArea";
+export type { TextAreaProps } from "./components/TextArea/TextArea";
+export { FileUpload } from "./components/FileUpload/FileUpload";
+export type { FileUploadProps } from "./components/FileUpload/FileUpload";
 export { Sitemap } from "./components/Sitemap/Sitemap";
 export type { SitemapProps, SitemapItem } from "./components/Sitemap/Sitemap";
 export { TextInput } from "./components/TextInput/TextInput";
