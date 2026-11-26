@@ -2,7 +2,7 @@ import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { Link as RouterLink, MemoryRouter, useLocation } from "react-router-dom";
 import { App } from "./App";
 import { preferencesStorageKey } from "./preferences";
-import { blogMarkdownStorageKey } from "./pages/BlogComponents/sections/MarkdownEditorExample";
+import { blogMarkdownStorageKey } from "./pages/WritingComponents/sections/MarkdownEditorExample";
 
 beforeEach(() => {
   sessionStorage.removeItem(preferencesStorageKey);
@@ -222,16 +222,16 @@ it("redirects old dashboard URLs home while preserving search and section anchor
 
 it("links the full-width blog feature card to its subpage and shows the breadcrumb hierarchy", () => {
   const { container } = renderApp();
-  const section = screen.getByRole("region", { name: "Blog features" });
+  const section = screen.getByRole("region", { name: "Writing features" });
   expect(within(section).getAllByRole("article")).toHaveLength(1);
-  expect(within(section).getByRole("heading", { name: "Want to see blog features? Check out the blog components!" })).toBeInTheDocument();
+  expect(within(section).getByRole("heading", { name: "Want to see writing features? Check out the writing components!" })).toBeInTheDocument();
   const general = screen.getByRole("region", { name: "General Components" });
   expect(general.nextElementSibling).toBe(section);
   fireEvent.change(screen.getByRole("combobox", { name: "Theme selector" }), { target: { value: "pink" } });
   fireEvent.click(screen.getByRole("switch", { name: "Toggle dark mode" }));
-  fireEvent.click(within(section).getByRole("button", { name: "View blog components" }));
-  expect(screen.getByTestId("location").textContent).toBe("/blog-components");
-  expect(screen.getByRole("heading", { level: 1, name: "Blog Components" })).toBeInTheDocument();
+  fireEvent.click(within(section).getByRole("button", { name: "View writing components" }));
+  expect(screen.getByTestId("location").textContent).toBe("/writing-components");
+  expect(screen.getByRole("heading", { level: 1, name: "Writing Components" })).toBeInTheDocument();
   expect(screen.queryByRole("region", { name: "General Components" })).not.toBeInTheDocument();
   expect(container.querySelector(".mx-demo")).toHaveAttribute("data-mx-theme", "pink");
   expect(container.querySelector(".mx-demo")).toHaveAttribute("data-mx-mode", "dark");
@@ -239,12 +239,12 @@ it("links the full-width blog feature card to its subpage and shows the breadcru
   const steps = breadcrumbs.getAllByRole("listitem");
   expect(steps).toHaveLength(2);
   expect(within(steps[0]).getByRole("link", { name: "Dashboard" })).toHaveAttribute("href", "/");
-  expect(within(steps[1]).getByText("Blog Components")).toHaveAttribute("aria-current", "page");
+  expect(within(steps[1]).getByText("Writing Components")).toHaveAttribute("aria-current", "page");
 });
 
-it("opens Blog Components directly and returns home through its parent breadcrumb", () => {
-  renderApp(["/blog-components"]);
-  expect(screen.getByRole("heading", { level: 1, name: "Blog Components" })).toBeInTheDocument();
+it("opens Writing Components directly and returns home through its parent breadcrumb", () => {
+  renderApp(["/writing-components"]);
+  expect(screen.getByRole("heading", { level: 1, name: "Writing Components" })).toBeInTheDocument();
   const breadcrumbs = within(screen.getByRole("navigation", { name: "Breadcrumb" }));
   fireEvent.click(breadcrumbs.getByRole("link", { name: "Dashboard" }));
   expect(screen.getByTestId("location").textContent).toBe("/");
@@ -252,8 +252,11 @@ it("opens Blog Components directly and returns home through its parent breadcrum
   expect(within(screen.getByRole("navigation", { name: "Breadcrumb" })).getAllByRole("listitem")).toHaveLength(1);
 });
 
-it("shows the Markdown editor on Blog Components and reloads a saved post", async () => {
-  const first = renderApp(["/blog-components"]);
+it("shows the Markdown editor on Writing Components and reloads a saved post", async () => {
+  const first = renderApp(["/writing-components"]);
+  const title = screen.getByRole("textbox", { name: "Title" });
+  expect(title).toHaveValue("A little story");
+  expect(title.compareDocumentPosition(screen.getByRole("textbox", { name: "Post content" })) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   expect(screen.getByRole("heading", { name: "Markdown Editor" })).toBeInTheDocument();
   const markdown = "# My saved post\n\n**A small story.**";
   fireEvent.change(screen.getByRole("textbox", { name: "Post content" }), { target: { value: markdown } });
@@ -261,7 +264,7 @@ it("shows the Markdown editor on Blog Components and reloads a saved post", asyn
   expect(await screen.findByText("Saved.")).toBeInTheDocument();
   expect(localStorage.getItem(blogMarkdownStorageKey)).toBe(markdown);
   first.unmount();
-  renderApp(["/blog-components"]);
+  renderApp(["/writing-components"]);
   expect(screen.getByRole("textbox", { name: "Post content" })).toHaveValue(markdown);
   fireEvent.click(screen.getByRole("button", { name: "Preview" }));
   expect(within(screen.getByRole("region", { name: "Markdown preview" })).getByRole("heading", { name: "My saved post" })).toBeInTheDocument();

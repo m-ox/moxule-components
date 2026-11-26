@@ -1,7 +1,7 @@
 import { matchRoutes, Navigate, useLocation, useRoutes, type RouteObject } from "react-router-dom";
 import { AppLayout } from "./components/AppLayout";
 import { DashboardPage } from "./pages/Dashboard/DashboardPage";
-import { BlogComponentsPage } from "./pages/BlogComponents/BlogComponentsPage";
+import { WritingComponentsPage } from "./pages/WritingComponents/WritingComponentsPage";
 import { PreferencesPage } from "./pages/Preferences/PreferencesPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import type { BreadcrumbItem } from "../index";
@@ -11,6 +11,11 @@ function DashboardRedirect() {
   return <Navigate to={{ pathname: "/", search, hash }} state={state} replace />;
 }
 
+function WritingRedirect() {
+  const { search, hash, state } = useLocation();
+  return <Navigate to={{ pathname: "/writing-components", search, hash }} state={state} replace />;
+}
+
 // Breadcrumb labels belong to routes, alongside their page components.
 const pages = [
   {
@@ -18,11 +23,12 @@ const pages = [
     handle: { breadcrumb: "Dashboard" },
     children: [
       { index: true, element: <DashboardPage /> },
-      { path: "blog-components", element: <BlogComponentsPage />, handle: { breadcrumb: "Blog Components" } },
+      { path: "writing-components", element: <WritingComponentsPage />, handle: { breadcrumb: "Writing Components" } },
       { path: "preferences", element: <PreferencesPage />, handle: { breadcrumb: "Preferences" } }
     ]
   },
   { path: "dashboard", element: <DashboardRedirect /> },
+  { path: "blog-components", element: <WritingRedirect /> },
   { path: "*", element: <NotFoundPage />, handle: { breadcrumb: "Page not found" } }
 ] satisfies RouteObject[];
 

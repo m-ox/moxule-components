@@ -1,16 +1,18 @@
 import { Link as RouterLink } from "react-router-dom";
 import { Link, Section } from "../../../index";
 import { MarkdownEditorExample } from "./sections/MarkdownEditorExample";
+import { TitleInputExample } from "./sections/TitleInputExample";
 
-export function BlogComponentsPage() {
+export function WritingComponentsPage() {
   return (
     <Section
-      title="Blog Components"
-      description="A home for blog features and component previews."
+      title="Writing Components"
+      description="A home for writing features and component previews."
       headingLevel="h1"
       headingProps={{ className: "mx-demo-title" }}
       className="mx-demo-stack"
     >
+      <TitleInputExample />
       <MarkdownEditorExample />
       <Link asChild><RouterLink to="/">Back to Dashboard</RouterLink></Link>
     </Section>

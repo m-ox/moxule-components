@@ -155,7 +155,7 @@ body,
 .mx-demo-preferences-fields .mx-dropdown-wrapper { width: 100%; }
 .mx-demo-preferences-fields .mx-dropdown { width: 100%; }
 
-.mx-demo-blog-cta {
+.mx-demo-writing-cta {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -163,7 +163,7 @@ body,
   gap: 1.25rem;
   padding: clamp(1.25rem, 3vw, 2rem);
 }
-.mx-demo-blog-cta-copy {
+.mx-demo-writing-cta-copy {
   flex: 1 1 24rem;
   min-width: 0;
   font-size: calc(1.2rem * var(--mx-font-scale, 1));

@@ -1,0 +1,9 @@
+TextInput
+
+Required label supplies a visible, associated accessible name.
+description and error are optional React content connected by aria-describedby.
+error marks the input invalid and is announced as an alert.
+Supports native input props, controlled value/onChange or defaultValue, name,
+form, validation, disabled/readOnly, and an input ref. type defaults to text.
+class/className and sx/style apply to the input. Styles inherit themes and font
+scaling, with flat fills, diagonal corners, soft hover, and rounded focus.

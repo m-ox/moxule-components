@@ -1,5 +1,7 @@
 import "./styles.css";
 
+export { TextInput } from "./components/TextInput/TextInput";
+export type { TextInputProps } from "./components/TextInput/TextInput";
 export { Tooltip } from "./components/Tooltip/Tooltip";
 export type { TooltipProps } from "./components/Tooltip/Tooltip";
 export { Markdown } from "./components/Markdown/Markdown";

@@ -28,8 +28,8 @@ Add new page routes and their breadcrumb labels in `NavRouter`.
 The trail follows matched route ancestry: Dashboard shows a single current-page
 marker, and nested pages add their actual parent steps.
 
-The full-width Blog features card below General Components opens
-`/blog-components`. This subpage has a Dashboard → Blog Components breadcrumb
+The full-width Writing features card below General Components opens
+`/writing-components`. This subpage has a Dashboard → Writing Components breadcrumb
 trail and is also linked from the navigation drawer.
 
 The menu also opens `/preferences`: one compact card for font style, theme color,
@@ -385,9 +385,22 @@ Tests cover accessible names, descriptions, focus, disabled behavior, selection,
 
 Buttons use their theme's primary, secondary, or ghost hover colors, including explicit per-button theme colors. Dropdowns gain a soft themed fill on hover, and radio and checkbox hit areas gain a matching tint. Disabled controls keep their resting appearance, focus rings remain visible, and the transitions respect reduced-motion preferences.
 
+## TextInput
+
+`TextInput` provides a visible label, optional description/error, native input
+props, controlled or uncontrolled values, and an input ref.
+
+```tsx
+<TextInput label="Title" name="title" defaultValue="A little story" />
+```
+
+The Writing Components page shows a standalone title example above the Markdown
+editor. The example title is independent of Markdown saving. Older
+`/blog-components` links redirect to `/writing-components`.
+
 ## Markdown editor
 
-`MarkdownEditor` edits and saves plain Markdown. The Blog Components page has
+`MarkdownEditor` edits and saves plain Markdown. The Writing Components page has
 a full-width example whose Save action persists the post in `localStorage`;
 Download exports it as a `.md` file.
 
