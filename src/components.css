@@ -461,7 +461,7 @@
 .mx-breadcrumbs a.mx-breadcrumbs-step:hover::before { background-color: var(--mx-button-ghost-bg-hover, rgba(63, 97, 143, 0.14)); }
 .mx-breadcrumbs-separator { display: inline-flex; align-items: center; flex-shrink: 0; color: var(--mx-button-ghost-text, #3f618f); }
 .mx-breadcrumbs[data-mx-connected="true"] .mx-breadcrumbs-list { column-gap: 1.5em; row-gap: 0.65em; }
-.mx-breadcrumbs[data-mx-connected="true"] .mx-breadcrumbs-item { padding-top: 0.8em; }
+.mx-breadcrumbs[data-mx-connected="true"] .mx-breadcrumbs-item { padding-top: 0.2em; }
 .mx-breadcrumbs-connectors {
   position: absolute; inset: 0; width: 100%; height: 100%;
   overflow: visible; pointer-events: none; fill: none;

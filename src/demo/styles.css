@@ -58,7 +58,7 @@ body,
 .mx-demo-brand { text-decoration: none; }
 .mx-demo section[id] { scroll-margin-top: 9rem; }
 .mx-demo-app-header { position: sticky; top: 0; z-index: 20; background: var(--mx-page-shell-bg, #f7f7f7); }
-.mx-demo-breadcrumbs-layout { padding-block: 0.75rem; }
+.mx-demo-breadcrumbs-layout { padding: 0.5rem 1rem; }
 .mx-demo-navbar-actions { display: flex; align-items: center; gap: 0.75rem; }
 .mx-demo-drawer-links { display: grid; gap: 1rem; }
 

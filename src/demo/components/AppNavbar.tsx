@@ -1,5 +1,5 @@
 import { Link as RouterLink } from "react-router-dom";
-import { Breadcrumbs, Image, Layout, Link, ThemeToggle, Toolbar, type BreadcrumbItem } from "../../index";
+import { Breadcrumbs, Image, Link, ThemeToggle, Toolbar, type BreadcrumbItem } from "../../index";
 import { useDemoPreferences } from "../DemoProvider";
 import logoUrl from "../favicon.ico";
 import { AppMenu } from "./AppMenu";
@@ -20,9 +20,9 @@ export function AppNavbar({ breadcrumbs }: { breadcrumbs: readonly BreadcrumbIte
         }
         right={<div className="mx-demo-navbar-actions"><ThemeToggle onModeChange={setMode} /><AppMenu /></div>}
       />
-      <Layout margin="sm" contentWidth="md" className="mx-demo-breadcrumbs-layout">
+      <div className="mx-demo-breadcrumbs-layout">
         <Breadcrumbs items={breadcrumbs} renderLink={(item) => <RouterLink to={item.href!}>{item.label}</RouterLink>} />
-      </Layout>
+      </div>
     </div>
   );
 }

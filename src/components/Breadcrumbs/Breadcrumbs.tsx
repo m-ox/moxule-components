@@ -46,8 +46,8 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(function Br
         return {
           x: box.left - bounds.left + font * 0.325,
           top: box.top - bounds.top + font * 0.425,
-          rail: box.top - bounds.top - font * 0.8,
-          slant: font * 0.65
+          rail: box.top - bounds.top - font * 0.2,
+          slant: font * 0.35
         };
       })));
     };

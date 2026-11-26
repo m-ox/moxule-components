@@ -22,7 +22,7 @@ anchors; unknown URLs show a page with a link back to Dashboard.
 `NavRouter.tsx` owns route definitions and their `handle.breadcrumb` labels.
 It supplies the matching breadcrumb trail to `AppLayout`, which displays it
 above the page content in the sticky header area, just below the navbar.
-Breadcrumbs use half the content's side padding to sit a little farther left.
+Breadcrumbs span the header width and align with the navbar logo's left inset.
 The footer remains in normal page flow.
 Add new page routes and their breadcrumb labels in `NavRouter`.
 The trail follows matched route ancestry: Dashboard shows a single current-page
