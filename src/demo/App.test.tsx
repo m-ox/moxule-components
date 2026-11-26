@@ -127,7 +127,7 @@ it("renders Dashboard as home and supplies breadcrumbs above the page", () => {
   expect(header.queryByRole("link", { name: "Dashboard" })).not.toBeInTheDocument();
 });
 
-it("places the menu beside the navbar theme toggle and navigates with the left drawer", () => {
+it("places the menu beside the navbar theme toggle and navigates with the right drawer", () => {
   vi.useFakeTimers();
   try {
     renderApp();
@@ -137,7 +137,7 @@ it("places the menu beside the navbar theme toggle and navigates with the left d
     act(() => trigger.focus());
     fireEvent.click(trigger);
     const drawer = screen.getByRole("dialog", { name: "Menu" });
-    expect(drawer).toHaveAttribute("data-mx-side", "left");
+    expect(drawer).toHaveAttribute("data-mx-side", "right");
     expect(trigger).toHaveAttribute("aria-expanded", "true");
     expect(trigger).toHaveAttribute("aria-controls", drawer.id);
     fireEvent.click(within(drawer).getByRole("link", { name: "Components" }));

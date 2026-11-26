@@ -522,7 +522,7 @@ reopened, and cleans up on unmount. Reduced motion skips the animation.
 Set `--mx-drawer-width` in CSS to customize the default 22rem width.
 
 The demo's menu button sits in the navbar beside the light/dark toggle. Its
-left drawer links to Dashboard and its sections. The Drawer card in General
+right drawer links to the app's pages. The Drawer card in General
 Components lets you try either side.
 
 ## Nudges and notifications

@@ -26,7 +26,7 @@ export function AppMenu() {
       <Tooltip content="Open the app menu. Ctrl/⌘ + K." side="bottom" disabled={open}>
         <MenuButton open={open} onClick={() => setOpen((value) => !value)} aria-controls={drawerId} aria-keyshortcuts="Control+k Meta+k" />
       </Tooltip>
-      <Drawer id={drawerId} title="Menu" description="Explore the dashboard." open={open} onOpenChange={setOpen} side="left">
+      <Drawer id={drawerId} title="Menu" description="Explore the dashboard." open={open} onOpenChange={setOpen} side="right">
         <Sitemap aria-label="Main navigation" items={appSitemap} currentPath={pathname}
           renderLink={(item) => <RouterLink to={item.href} onClick={() => setOpen(false)}>{item.label}</RouterLink>} />
       </Drawer>
