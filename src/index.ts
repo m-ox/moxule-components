@@ -1,5 +1,7 @@
 import "./styles.css";
 
+export { Banner } from "./components/Banner/Banner";
+export type { BannerProps, BannerVariant } from "./components/Banner/Banner";
 export { Button } from "./components/Button/Button";
 export type { ButtonProps } from "./components/Button/Button";
 export { Link } from "./components/Link/Link";
@@ -8,6 +10,8 @@ export { Card } from "./components/Card/Card";
 export type { CardProps } from "./components/Card/Card";
 export { Checkbox } from "./components/Checkbox/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox/Checkbox";
+export { CheckboxGroup } from "./components/CheckboxGroup/CheckboxGroup";
+export type { CheckboxGroupProps, CheckboxOption } from "./components/CheckboxGroup/CheckboxGroup";
 export { Radio } from "./components/Radio/Radio";
 export type { RadioProps } from "./components/Radio/Radio";
 export { RadioGroup } from "./components/RadioGroup/RadioGroup";
@@ -28,6 +32,8 @@ export { Text } from "./components/Typography/Text";
 export type { TextProps, TextVariant, TextAs } from "./components/Typography/Text";
 export { Toggle } from "./components/Toggle/Toggle";
 export type { ToggleProps } from "./components/Toggle/Toggle";
+export { ThemeToggle } from "./components/ThemeToggle/ThemeToggle";
+export type { ThemeToggleProps } from "./components/ThemeToggle/ThemeToggle";
 export { Footer } from "./components/Footer/Footer";
 export type { FooterProps, FooterLayout, FooterPosition } from "./components/Footer/Footer";
 export { Toolbar } from "./components/Toolbar/Toolbar";

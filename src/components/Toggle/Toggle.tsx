@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { useId, type ButtonHTMLAttributes, type ReactNode } from "react";
 
 export interface ToggleProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onChange" | "children"> {
@@ -16,7 +16,7 @@ export interface ToggleProps
 export function Toggle({
   checked,
   onCheckedChange,
-  ariaLabel = "Toggle",
+  ariaLabel,
   label,
   labelPosition = "right",
   thumbOnIcon,
@@ -26,17 +26,29 @@ export function Toggle({
   className,
   style,
   disabled,
+  id,
+  onClick,
   ...props
 }: ToggleProps) {
+  const generatedId = useId();
+  const buttonId = id ?? generatedId;
+  const hasLabel = label != null && label !== false;
   const toggleButton = (
     <button
+      id={buttonId}
       type="button"
       role="switch"
       aria-checked={checked}
-      aria-label={ariaLabel}
+      aria-label={ariaLabel ?? (hasLabel ? undefined : "Toggle")}
       disabled={disabled}
       className={["mx-toggle", className, classProp].filter(Boolean).join(" ")}
-      onClick={(event) => { event.currentTarget.focus(); onCheckedChange(!checked); }}
+      onClick={(event) => {
+        onClick?.(event);
+        if (!event.defaultPrevented) {
+          event.currentTarget.focus();
+          onCheckedChange(!checked);
+        }
+      }}
       style={{ ...sx, ...style }}
       {...props}
     >
@@ -45,12 +57,12 @@ export function Toggle({
       </span>
     </button>
   );
-  if (!label) return toggleButton;
+  if (!hasLabel) return toggleButton;
   return (
     <span className="mx-toggle-wrapper">
-      {labelPosition === "left" ? <span className="mx-toggle-label">{label}</span> : null}
+      {labelPosition === "left" ? <label htmlFor={buttonId} className="mx-toggle-label">{label}</label> : null}
       {toggleButton}
-      {labelPosition === "right" ? <span className="mx-toggle-label">{label}</span> : null}
+      {labelPosition === "right" ? <label htmlFor={buttonId} className="mx-toggle-label">{label}</label> : null}
     </span>
   );
 }

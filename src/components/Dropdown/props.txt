@@ -16,4 +16,4 @@ Inherited props:
 
 Notes:
 - Dropdown renders as a `<select>` element.
-- The component applies theme-aware border, background, and text colors.
+- The component has no decorative border, with theme-aware background/text colors and a visible focus ring.

@@ -159,7 +159,7 @@ function buildTheme(seed: ThemeSeed, mode: ThemeMode): ThemeTokens {
 
 const primaryLight = buildTheme(
   {
-    surface: "#eef3fb",
+    surface: "#ffffff",
     text: "#1d3558",
     border: "#8ea5c2",
     chromeBg: "#3f618f",
@@ -239,7 +239,7 @@ const secondaryDark = buildTheme(
 
 const tertiaryLight = buildTheme(
   {
-    surface: "#f8fcfb",
+    surface: "#ffffff",
     text: "#0f3a33",
     border: "#abd6cb",
     chromeBg: "#0f7f6d",
@@ -279,7 +279,7 @@ const tertiaryDark = buildTheme(
 
 const blueLight = buildTheme(
   {
-    surface: "#f4f8ff",
+    surface: "#ffffff",
     text: "#102a52",
     border: "#9fb8ee",
     chromeBg: "#255fc7",
@@ -319,7 +319,7 @@ const blueDark = buildTheme(
 
 const redLight = buildTheme(
   {
-    surface: "#fbf8f8",
+    surface: "#ffffff",
     text: "#422125",
     border: "#e0c3c6",
     chromeBg: "#a6535c",
@@ -359,7 +359,7 @@ const redDark = buildTheme(
 
 const greenLight = buildTheme(
   {
-    surface: "#f4fcfa",
+    surface: "#ffffff",
     text: "#0d3a35",
     border: "#a8d9d1",
     chromeBg: "#0f7d72",
@@ -399,7 +399,7 @@ const greenDark = buildTheme(
 
 const purpleLight = buildTheme(
   {
-    surface: "#f9f8fa",
+    surface: "#ffffff",
     text: "#2b213e",
     border: "#c7c0d6",
     chromeBg: "#5f4a89",
@@ -439,7 +439,7 @@ const purpleDark = buildTheme(
 
 const pinkLight = buildTheme(
   {
-    surface: "#fdf9fa",
+    surface: "#ffffff",
     text: "#422e33",
     border: "#e9bdc8",
     chromeBg: "#dd9aaa",

@@ -10,6 +10,21 @@ it("lets Image handle the toolbar logo fallback", () => {
   expect(logo).toHaveTextContent("M");
 });
 
+it("shows an independent toggle example and a reusable navbar theme toggle", () => {
+  const { container } = render(<App />);
+  const examples = within(screen.getByRole("article", { name: "Toggle" }));
+  const sound = examples.getByRole("switch", { name: "Enable sound" });
+  fireEvent.click(examples.getByText("Enable sound"));
+  expect(sound).toHaveAttribute("aria-checked", "true");
+  expect(container.querySelector('[data-mx-mode="light"]')).toBeInTheDocument();
+  expect(examples.getByRole("switch", { name: "Unavailable option" })).toBeDisabled();
+  const navbarToggle = within(screen.getByRole("banner")).getByRole("switch", { name: "Toggle dark mode" });
+  expect(navbarToggle).toHaveClass("mx-theme-toggle");
+  fireEvent.click(navbarToggle);
+  expect(container.querySelector('[data-mx-mode="dark"]')).toBeInTheDocument();
+  expect(sound).toHaveAttribute("aria-checked", "true");
+});
+
 it("places working general controls below the theme previews and preserves selections on theme changes", () => {
   const { container } = render(<App />);
   expect(container.querySelectorAll("[style]")).toHaveLength(0);

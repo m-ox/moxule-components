@@ -1,0 +1,21 @@
+Banner Props
+
+Component: Banner
+Source: src/components/Banner/Banner.tsx
+
+- message (required): text or React content shown in the banner.
+- variant (optional): success | warning | error | neutral (default).
+- color (optional): custom CSS color for the thick left accent strip.
+- dismissible (optional): show a borderless close X on the right; default false.
+- onDismiss (optional): called after the close animation finishes and hides the banner.
+- closeLabel (optional): accessible close button name; default "Dismiss banner".
+- role defaults to alert for error, status for other variants; can be overridden.
+- Native div attributes and ref are forwarded.
+- sx/style and class/className apply to the outer container.
+
+Uses theme surface/text/status tokens, rounded corners, and a thick left color
+strip. No decorative borders or shadows on the banner or close button.
+Keyboard focus remains visible. Default styles live in the library stylesheet.
+Dismissal is local to the mounted instance; remount to show it again.
+Closing gently fades and collapses the banner over 240ms. Reduced-motion users
+get immediate dismissal. Pending dismissal is cancelled on unmount.

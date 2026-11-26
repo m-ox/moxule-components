@@ -1,0 +1,17 @@
+ThemeToggle Props
+
+Component: ThemeToggle
+Source: src/components/ThemeToggle/ThemeToggle.tsx
+
+- onModeChange (required): receives "light" or "dark" when the switch is activated.
+- mode (optional): explicit controlled mode; otherwise reads the current ThemeProvider mode.
+- ariaLabel (optional): accessible name. Defaults to "Toggle dark mode" when no visible label is supplied.
+- label/labelPosition (optional): visible clickable label and its placement.
+- disabled, class/className, sx/style, and native button attributes are forwarded to Toggle.
+
+Uses a sun for light mode and a moon for dark mode. Decorative icons are hidden
+from assistive technology. The checked state means dark mode is enabled.
+Light mode uses warm amber colors; dark mode uses deep navy and a pale moon thumb.
+Track and thumb are solid fills without borders or shadows.
+The parent owns the mode; connect onModeChange to the state passed to ThemeProvider.
+All default styles live in the library stylesheet.

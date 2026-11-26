@@ -10,3 +10,4 @@ Source: src/components/Checkbox/Checkbox.tsx
 - sx/style and class/className apply to the input.
 - Native checkbox behavior supports Space, form submission, and validation.
 - Theme colors, native browser appearance, and visible focus outlines are preserved.
+- Use CheckboxGroup for multiple options with shared labeling and built-in spacing.

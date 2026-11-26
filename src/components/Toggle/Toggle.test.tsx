@@ -17,6 +17,15 @@ describe("Toggle", () => {
     expect(onCheckedChange).toHaveBeenCalledWith(true);
   });
 
+  it("preserves native click callbacks while changing state", () => {
+    const onClick = vi.fn();
+    const onCheckedChange = vi.fn();
+    render(<Toggle checked={false} onCheckedChange={onCheckedChange} onClick={onClick} ariaLabel="Sound" />);
+    fireEvent.click(screen.getByRole("switch"));
+    expect(onClick).toHaveBeenCalledOnce();
+    expect(onCheckedChange).toHaveBeenCalledWith(true);
+  });
+
   it("shows rounded focus ring on focus", () => {
     render(<Toggle checked={false} onCheckedChange={() => undefined} ariaLabel="Theme mode" />);
 

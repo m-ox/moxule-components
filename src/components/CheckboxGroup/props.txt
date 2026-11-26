@@ -1,0 +1,21 @@
+CheckboxGroup Props
+
+Component: CheckboxGroup
+Source: src/components/CheckboxGroup/CheckboxGroup.tsx
+
+- legend (required): visible label for the group.
+- options (required): readonly list of { label, value, disabled?, required? }.
+  Values must be unique. Required applies to that specific checkbox.
+- description (optional): hint automatically linked with aria-describedby.
+- value (optional): controlled array of selected option values.
+- defaultValue (optional): initial uncontrolled selection; native form reset is preserved.
+- onChange (optional): receives the selected values as a string array.
+- name (optional): shared input name; generated if omitted.
+- disabled (optional): disables the whole group.
+- form (optional): associates the group and inputs with an external form.
+- ref targets the fieldset. Native fieldset attributes are forwarded.
+- sx/style and class/className apply to the fieldset.
+
+Built-in vertical option spacing is 0.75rem, controlled by --mx-checkbox-group-gap.
+The group owns its fieldset, legend, description, and native Checkbox inputs.
+Default styles live in the library stylesheet, inheriting theme and font scale.

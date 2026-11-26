@@ -7,7 +7,10 @@ Expected props:
 - checked (required): boolean state of the toggle.
 - onCheckedChange (required): callback receiving the next checked value.
 - ariaLabel (optional): accessible label announced by assistive technologies.
-  Default: "Toggle".
+  Default: visible label text, or "Toggle" if no label is supplied.
+- label (optional): visible, clickable label associated with the switch.
+- labelPosition (optional, default "right"): place the label on the left or right.
+- thumbOnIcon/thumbOffIcon (optional): custom content inside the thumb.
 - sx (optional): style override object applied before `style`.
 - class (optional): additional class string merged with `className`.
 
@@ -19,3 +22,6 @@ Inherited props:
 Notes:
 - Toggle renders as a `<button>` with `role="switch"` and `aria-checked`.
 - Visual style is a classic track + sliding thumb bubble.
+- Track and thumb use flat solid fills without borders or shadows.
+- Colors, hover feedback, and focus styling follow the current theme.
+- onClick is called before onCheckedChange; preventDefault cancels the state change.

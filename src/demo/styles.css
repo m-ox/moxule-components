@@ -120,7 +120,13 @@ body,
 .mx-demo-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--mx-demo-grid-gap);
+  align-items: center;
+  gap: max(0.75rem, var(--mx-demo-grid-gap));
+}
+
+.mx-demo-button-status {
+  margin-top: 1rem;
+  line-height: 1.5;
 }
 
 .mx-demo-label {
@@ -131,4 +137,9 @@ body,
 .mx-demo-select {
   width: 100%;
 }
+
+.mx-demo-toggle-examples { display: grid; }
+
+.mx-demo-banner-examples { display: grid; gap: var(--mx-demo-grid-gap); }
+.mx-demo-custom-banner { --mx-banner-accent: #5f4a89; }
 

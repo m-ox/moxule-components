@@ -61,6 +61,11 @@ describe("theme contrast compliance", () => {
           ["surface text", tokens.text, tokens.surface],
           ["page text and focus ring", tokens.text, tokens.pageShellBg],
           ["focus ring on secondary controls", tokens.text, tokens.buttonSecondaryBg],
+          ["text on inset dropdown hover", tokens.text, mode === "light"
+            ? tokens.buttonSecondaryBgHover
+            : compositeHover("rgba(0, 0, 0, 0.32)", tokens.surface)],
+          ["text on inset dropdown", tokens.text, compositeHover(mode === "light"
+            ? tokens.buttonGhostBgHover : "rgba(0, 0, 0, 0.24)", tokens.surface)],
           ["chrome text", tokens.chromeText, tokens.chromeBg],
           ["primary button", tokens.buttonPrimaryText, tokens.buttonPrimaryBg],
           ["primary button hover", tokens.buttonPrimaryText, tokens.buttonPrimaryBgHover],

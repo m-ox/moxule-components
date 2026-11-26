@@ -1,8 +1,9 @@
 import { useState } from "react";
 import {
+  Banner,
   Button,
   Card,
-  Checkbox,
+  CheckboxGroup,
   Dropdown,
   Footer,
   Header,
@@ -15,6 +16,7 @@ import {
   Text,
   Toggle,
   Toolbar,
+  ThemeToggle,
   ThemeProvider,
   type FontStyleName,
   type ThemeName,
@@ -46,7 +48,8 @@ export function App() {
   const [buttonPresses, setButtonPresses] = useState(0);
   const [componentSize, setComponentSize] = useState("medium");
   const [density, setDensity] = useState("comfortable");
-  const [notifications, setNotifications] = useState(false);
+  const [notifications, setNotifications] = useState<string[]>([]);
+  const [soundEnabled, setSoundEnabled] = useState(false);
 
   return (
     <ThemeProvider
@@ -72,11 +75,7 @@ export function App() {
             </div>
           }
           right={
-            <Toggle
-              checked={mode === "dark"}
-              onCheckedChange={(isDark) => setMode(isDark ? "dark" : "light")}
-              ariaLabel="Toggle dark mode"
-            />
+            <ThemeToggle onModeChange={setMode} />
           }
         />
 
@@ -180,7 +179,7 @@ export function App() {
                     <Button onClick={() => setButtonPresses((count) => count + 1)}>Try button</Button>
                     <Button variant="secondary" disabled>Disabled</Button>
                   </div>
-                  <Text role="status" variant="sm" className="mx-demo-spaced">
+                  <Text role="status" variant="sm" className="mx-demo-button-status">
                     {buttonPresses === 0 ? "Ready to try." : `Button pressed ${buttonPresses} ${buttonPresses === 1 ? "time" : "times"}.`}
                   </Text>
                 </Card>
@@ -218,14 +217,32 @@ export function App() {
                 </Card>
                 <Card className="mx-demo-card">
                   <Header variant="h4" className="mx-demo-control-title">Checkbox</Header>
-                  <Checkbox
+                  <CheckboxGroup
                     name="notifications"
-                    label="Enable notifications"
-                    checked={notifications}
-                    onChange={(event) => setNotifications(event.target.checked)}
+                    legend="Notifications"
+                    options={[
+                      { label: "Enable notifications", value: "enabled" },
+                      { label: "Unavailable option", value: "unavailable", disabled: true }
+                    ]}
+                    value={notifications}
+                    onChange={setNotifications}
                   />
-                  <Checkbox label="Unavailable option" disabled />
                 </Card>
+                <Card className="mx-demo-card" aria-labelledby="toggle-demo-title">
+                  <Header id="toggle-demo-title" variant="h4" className="mx-demo-control-title">Toggle</Header>
+                  <div className="mx-demo-toggle-examples">
+                    <Toggle label="Enable sound" checked={soundEnabled} onCheckedChange={setSoundEnabled} />
+                    <Toggle label="Unavailable option" checked={false} onCheckedChange={() => undefined} disabled />
+                  </div>
+                </Card>
+              </div>
+              <div className="mx-demo-banner-examples" aria-labelledby="banner-demo-title">
+                <Header id="banner-demo-title" variant="h4" className="mx-demo-theme-title">Banner</Header>
+                <Banner role="note" variant="success" message="Your changes have been saved." />
+                <Banner role="note" variant="warning" message="Please review your settings before continuing." />
+                <Banner role="note" variant="error" message="Something went wrong. Please try again." />
+                <Banner role="note" message="You can update these preferences at any time." />
+                <Banner role="note" className="mx-demo-custom-banner" message="A custom accent with an optional close button." dismissible />
               </div>
             </Section>
           </Section>
