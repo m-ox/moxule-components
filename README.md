@@ -12,6 +12,26 @@ Component library for m-ox to use.
 - `npm run typecheck`: Run TypeScript checks
 - `npm test`: Run tests once
 
+## Demo routing and pages
+
+The demo uses React Router with `BrowserRouter` in `src/demo/main.tsx`.
+`App` composes `DemoProvider` and `NavRouter`. Dashboard is the home page at `/`.
+Older `/dashboard` URLs redirect home, preserving query strings and section
+anchors; unknown URLs show a page with a link back to Dashboard.
+
+`NavRouter.tsx` owns route definitions and their `handle.breadcrumb` labels.
+It supplies the matching breadcrumb trail to `AppLayout`, which displays it
+above the page content alongside the shared navbar and natural footer.
+Add new page routes and their breadcrumb labels in `NavRouter`.
+The trail follows matched route ancestry: Dashboard shows a single current-page
+marker, and nested pages add their actual parent steps.
+
+`pages/Dashboard/DashboardPage.tsx` composes the font preview, theme preview,
+and General Components sections. Each section and control example lives in
+its own file. Shared theme, mode, font, size, and density preferences live in
+`DemoProvider` and survive page navigation; interactive example state stays
+with its example. Footer links navigate to actual dashboard sections.
+
 ## Quick start
 
 ```bash
@@ -353,6 +373,77 @@ Provide a meaningful button name and a visible `<label htmlFor="...">` for each 
 Tests cover accessible names, descriptions, focus, disabled behavior, selection, form validation and submission, and default theme text contrast of at least 4.5:1. Custom token overrides and style overrides need their own contrast checks. These components support the [Section 508 WCAG AA requirements](https://www.section508.gov/test/websites/); full application conformance also requires manual keyboard, screen reader, and forced colors testing.
 
 Buttons use their theme's primary, secondary, or ghost hover colors, including explicit per-button theme colors. Dropdowns gain a soft themed fill on hover, and radio and checkbox hit areas gain a matching tint. Disabled controls keep their resting appearance, focus rings remain visible, and the transitions respect reduced-motion preferences.
+
+## Nudges and notifications
+
+Wrap the app with `NudgeProvider` inside `ThemeProvider`, then call `useNudges()`
+from any descendant. Nudges stack in the bottom-right corner by default and
+share Banner's status colors, custom accent support, and flat surface.
+
+```tsx
+import { NudgeProvider, ThemeProvider, useNudges, Button } from "moxule-components";
+
+function SaveExample() {
+  const { nudge } = useNudges();
+  return <Button onClick={() => nudge({ message: "Saved!", variant: "success" })}>Save</Button>;
+}
+
+<ThemeProvider>
+  <NudgeProvider position="bottom-right">
+    <SaveExample />
+  </NudgeProvider>
+</ThemeProvider>
+```
+
+Variants are `success`, `warning`, `error`, and `neutral`; `color` accepts any CSS
+accent color. `nudge("Message")` is a neutral shortcut. Each call returns an ID
+for `dismiss(id)`; `dismissAll()` clears the stack with the same gentle animation.
+`Nudge` is also exported for standalone use.
+
+Non-error nudges close after six seconds by default. Errors stay until closed;
+set `duration: 0` to keep any message visible, or supply a duration in milliseconds.
+The provider's `duration` changes the default for non-errors. Timers pause on
+hover and keyboard focus. Each nudge has a close X, announces its message without
+taking focus, and respects reduced-motion preferences. `onDismiss` runs after the
+240ms exit animation. Pending timers are cancelled on unmount.
+
+The provider supports all four corner positions, inherits theme/font changes,
+and scrolls for long queues. The demo's Notifications card follows Toggle and
+lets you trigger each status, the current theme color, and custom-color examples.
+
+## Breadcrumbs
+
+`Breadcrumbs` renders an accessible ordered navigation trail using themed
+`Link` components. Pass `items` from root to current page. The last item is
+plain text with `aria-current="page"`. Parent pages have outlined circles and the
+current page has a filled circle, with small lightning bolts between steps.
+Markers and separators use the theme accent and are decorative. Empty trails
+render nothing. Customize the navigation name with `aria-label` and the
+separator with `separator`.
+
+```tsx
+<Breadcrumbs items={[
+  { label: "Home", href: "/" },
+  { label: "Dashboard" }
+]} />
+```
+
+For React Router, supply `renderLink`. It is only called for ancestor items
+with an `href`, and its returned link receives the library's styling via
+`Link asChild`. React Router remains an optional integration for the library.
+
+```tsx
+import { Link as RouterLink } from "react-router-dom";
+import { Breadcrumbs } from "moxule-components";
+
+<Breadcrumbs
+  items={[{ label: "Home", href: "/" }, { label: "Dashboard" }]}
+  renderLink={(item) => <RouterLink to={item.href!}>{item.label}</RouterLink>}
+/>
+```
+
+The demo builds these items from route metadata and places Breadcrumbs at the
+top of the shared app layout, so individual pages don't repeat the trail.
 
 ## Banner
 

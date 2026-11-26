@@ -1,8 +1,24 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
+import { Link as RouterLink, MemoryRouter, useLocation } from "react-router-dom";
 import { App } from "./App";
 
+function LocationProbe() {
+  const { pathname, search, hash } = useLocation();
+  return <div hidden data-testid="location">{pathname}{search}{hash}</div>;
+}
+
+function renderApp(initialEntries = ["/"]) {
+  return render(
+    <MemoryRouter initialEntries={initialEntries}>
+      <App />
+      <RouterLink to="/missing-page">Missing page</RouterLink>
+      <LocationProbe />
+    </MemoryRouter>
+  );
+}
+
 it("lets Image handle the toolbar logo fallback", () => {
-  render(<App />);
+  renderApp();
   fireEvent.error(screen.getByRole("img", { name: "Moxules logo" }));
   const logo = screen.getByRole("img", { name: "Moxules logo" });
   expect(logo.tagName).toBe("SPAN");
@@ -11,7 +27,7 @@ it("lets Image handle the toolbar logo fallback", () => {
 });
 
 it("shows an independent toggle example and a reusable navbar theme toggle", () => {
-  const { container } = render(<App />);
+  const { container } = renderApp();
   const examples = within(screen.getByRole("article", { name: "Toggle" }));
   const sound = examples.getByRole("switch", { name: "Enable sound" });
   fireEvent.click(examples.getByText("Enable sound"));
@@ -26,7 +42,7 @@ it("shows an independent toggle example and a reusable navbar theme toggle", () 
 });
 
 it("places working general controls below the theme previews and preserves selections on theme changes", () => {
-  const { container } = render(<App />);
+  const { container } = renderApp();
   expect(container.querySelectorAll("[style]")).toHaveLength(0);
   expect(container.querySelectorAll("section")).toHaveLength(4);
   for (const section of container.querySelectorAll("section")) expect(section).toHaveClass("mx-section");
@@ -77,4 +93,78 @@ it("places working general controls below the theme previews and preserves selec
   expect(getComputedStyle(demo).getPropertyValue("--mx-demo-grid-gap")).toBe(comfortableGap);
   expect(getComputedStyle(demo).getPropertyValue("--mx-demo-card-padding")).toBe(comfortablePadding);
   expect(controls.getByRole("radio", { name: "Comfortable" })).toBeChecked();
+});
+
+it("renders Dashboard as home and supplies breadcrumbs above the page", () => {
+  renderApp(["/"]);
+  expect(screen.getByTestId("location").textContent).toBe("/");
+  const main = screen.getByRole("main");
+  const breadcrumbs = within(main).getByRole("navigation", { name: "Breadcrumb" });
+  expect(within(breadcrumbs).getByText("Dashboard")).toHaveAttribute("aria-current", "page");
+  expect(within(breadcrumbs).getAllByRole("listitem")).toHaveLength(1);
+  expect(within(breadcrumbs).queryByRole("link")).not.toBeInTheDocument();
+  expect(breadcrumbs.querySelector(".mx-breadcrumbs-separator")).toBeNull();
+  const title = screen.getByRole("heading", { level: 1, name: "Dashboard" });
+  expect(breadcrumbs.compareDocumentPosition(title) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  const header = within(screen.getByRole("banner"));
+  expect(header.getAllByRole("link")).toHaveLength(1);
+  expect(header.getByRole("link")).toHaveAttribute("href", "/");
+  expect(header.queryByRole("link", { name: "Dashboard" })).not.toBeInTheDocument();
+});
+
+it("places the notification clicker after Toggle and sends colored nudges to a corner", () => {
+  renderApp();
+  const toggle = screen.getByRole("article", { name: "Toggle" });
+  const card = screen.getByRole("article", { name: "Notifications" });
+  expect(toggle.nextElementSibling).toBe(card);
+  const controls = within(card);
+  fireEvent.click(controls.getByRole("button", { name: "Show nudge" }));
+  const viewport = screen.getByRole("region", { name: "Notifications" });
+  expect(viewport).toHaveAttribute("data-mx-position", "bottom-right");
+  expect(within(viewport).getByRole("status")).toHaveAttribute("data-mx-variant", "success");
+  fireEvent.change(controls.getByRole("combobox", { name: "Nudge type" }), { target: { value: "purple" } });
+  fireEvent.click(controls.getByRole("button", { name: "Show nudge" }));
+  expect(within(viewport).getByText("A little purple nudge.").closest(".mx-nudge")?.getAttribute("style")).toContain("#5f4a89");
+  fireEvent.click(screen.getByRole("switch", { name: "Toggle dark mode" }));
+  expect(viewport.closest(".mx-theme")).toHaveAttribute("data-mx-mode", "dark");
+  fireEvent.click(screen.getByRole("link", { name: "Missing page" }));
+  expect(within(viewport).getByText("A little purple nudge.")).toBeInTheDocument();
+});
+
+it("updates route breadcrumbs and preserves shared preferences when leaving Dashboard", () => {
+  const { container } = renderApp();
+  fireEvent.change(screen.getByRole("combobox", { name: "Theme selector" }), { target: { value: "pink" } });
+  fireEvent.click(screen.getByRole("button", { name: "Use clear" }));
+  fireEvent.change(screen.getByRole("combobox", { name: "Size" }), { target: { value: "large" } });
+  fireEvent.click(screen.getByRole("radio", { name: "Compact" }));
+  fireEvent.click(screen.getByRole("switch", { name: "Toggle dark mode" }));
+  fireEvent.click(screen.getByRole("link", { name: "Missing page" }));
+  expect(screen.getByRole("heading", { name: "Page not found" })).toBeInTheDocument();
+  const breadcrumbs = within(screen.getByRole("navigation", { name: "Breadcrumb" }));
+  expect(breadcrumbs.getByText("Page not found")).toHaveAttribute("aria-current", "page");
+  expect(screen.queryByRole("heading", { name: "General Components" })).not.toBeInTheDocument();
+  fireEvent.click(within(screen.getByRole("banner")).getByRole("link"));
+  expect(screen.getByRole("heading", { level: 1, name: "Dashboard" })).toBeInTheDocument();
+  const theme = container.querySelector(".mx-demo");
+  expect(theme).toHaveAttribute("data-mx-theme", "pink");
+  expect(theme).toHaveAttribute("data-mx-mode", "dark");
+  expect(theme).toHaveAttribute("data-mx-font-style", "clear");
+  expect(screen.getByRole("combobox", { name: "Size" })).toHaveValue("large");
+  expect(screen.getByRole("radio", { name: "Compact" })).toBeChecked();
+});
+
+it("supports home section URLs and routes footer links to real section anchors", () => {
+  renderApp(["/#theme-colors"]);
+  expect(screen.getByRole("heading", { name: "Theme Color Preview" })).toBeInTheDocument();
+  const footer = within(screen.getByRole("contentinfo"));
+  fireEvent.click(footer.getByRole("link", { name: "Components" }));
+  expect(screen.getByTestId("location").textContent).toBe("/#general-components");
+  expect(document.getElementById("general-components")).toHaveAccessibleName("General Components");
+});
+
+it("redirects old dashboard URLs home while preserving search and section anchors", () => {
+  renderApp(["/dashboard?view=all#theme-colors"]);
+  expect(screen.getByRole("heading", { level: 1, name: "Dashboard" })).toBeInTheDocument();
+  expect(screen.getByTestId("location").textContent).toBe("/?view=all#theme-colors");
+  expect(within(screen.getByRole("banner")).getByRole("link")).toHaveAttribute("href", "/");
 });

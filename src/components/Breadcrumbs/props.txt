@@ -1,0 +1,21 @@
+Breadcrumbs Props
+
+Component: Breadcrumbs
+Source: src/components/Breadcrumbs/Breadcrumbs.tsx
+
+- items (required): readonly array of { label, href? }, ordered from root to current page.
+- separator (optional): decorative content between items; defaults to a small lightning bolt.
+- renderLink (optional): receives (item, index), returns an anchor-compatible element.
+  Only used for ancestors with an href. Supports React Router Link and NavLink;
+  the library Link applies theme styling with asChild.
+- The final item is plain text with aria-current="page", even when it has an href.
+- Ancestors without an href are plain text. Empty lists render nothing.
+- aria-label defaults to "Breadcrumb" unless aria-labelledby is supplied.
+- Native nav attributes/ref, sx/style, and class/className are supported.
+
+Renders a labelled navigation landmark and ordered list. Separators are hidden
+from assistive technology. Links are keyboard-focusable and inherit theme colors
+and font scaling. Each ancestor has an outlined circle; the current page has a
+filled circle. Markers and lightning bolts follow the theme accent. The circles
+are decorative and do not change accessible names. The trail has no background,
+container border, or shadow.

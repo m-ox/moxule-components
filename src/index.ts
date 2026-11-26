@@ -1,5 +1,11 @@
 import "./styles.css";
 
+export { Nudge } from "./components/Nudge/Nudge";
+export type { NudgeProps } from "./components/Nudge/Nudge";
+export { NudgeProvider, useNudges } from "./components/Nudge/NudgeProvider";
+export type { NudgeOptions, NudgePosition, NudgeProviderProps } from "./components/Nudge/NudgeProvider";
+export { Breadcrumbs } from "./components/Breadcrumbs/Breadcrumbs";
+export type { BreadcrumbsProps, BreadcrumbItem } from "./components/Breadcrumbs/Breadcrumbs";
 export { Banner } from "./components/Banner/Banner";
 export type { BannerProps, BannerVariant } from "./components/Banner/Banner";
 export { Button } from "./components/Button/Button";

@@ -55,6 +55,10 @@ body,
   letter-spacing: 0.02em;
 }
 
+.mx-demo-brand { text-decoration: none; }
+.mx-demo section[id] { scroll-margin-top: 5rem; }
+.mx-demo-breadcrumbs { margin-bottom: 1rem; }
+
 .mx-demo-layout {
   flex: 1;
   padding-block: var(--mx-demo-page-padding);

@@ -1,0 +1,27 @@
+Nudge / NudgeProvider / useNudges
+
+Nudge accepts message, variant (success | warning | error | neutral), custom color,
+duration, open, closeLabel, onDismiss, native div attributes, sx/style, class/className.
+Colors and flat, borderless surfaces match Banner. The close button is always shown.
+Default duration: 6000ms; errors persist by default. Set duration=0 for persistence.
+Timers pause while hovered or focused and resume with the time remaining.
+Closing gently fades/collapses over 240ms; reduced motion dismisses immediately.
+onDismiss fires once after closing. Timers are cancelled on unmount.
+An open=false change requests dismissal; remount to reopen a dismissed instance.
+Error messages use role=alert; others use role=status. New nudges do not take focus.
+
+NudgeProvider wraps the app inside ThemeProvider. Props:
+- children (required)
+- position: bottom-right (default), bottom-left, top-right, top-left
+- duration: default lifetime for non-error nudges, in milliseconds (default 6000)
+- label: accessible viewport name (default Notifications)
+
+useNudges() requires NudgeProvider and returns:
+- nudge(messageString | { message, variant?, color?, duration?, closeLabel?, onDismiss? })
+  Adds a nudge and returns its unique ID.
+- dismiss(id): gently dismisses that nudge.
+- dismissAll(): gently dismisses all nudges.
+
+The fixed viewport stacks messages, adapts to narrow screens and safe areas, and
+scrolls for long queues. It stays inside the provider to inherit themes and fonts.
+Only notifications receive pointer events; surrounding page controls remain usable.
