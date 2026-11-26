@@ -378,6 +378,42 @@ Tests cover accessible names, descriptions, focus, disabled behavior, selection,
 
 Buttons use their theme's primary, secondary, or ghost hover colors, including explicit per-button theme colors. Dropdowns gain a soft themed fill on hover, and radio and checkbox hit areas gain a matching tint. Disabled controls keep their resting appearance, focus rings remain visible, and the transitions respect reduced-motion preferences.
 
+## Markdown editor
+
+`MarkdownEditor` edits and saves plain Markdown. The Blog Components page has
+a full-width example whose Save action persists the post in `localStorage`;
+Download exports it as a `.md` file.
+
+```tsx
+const [markdown, setMarkdown] = useState("# My post\n\nA little story.");
+
+<MarkdownEditor
+  label="Post content"
+  value={markdown}
+  onChange={setMarkdown}
+  onSave={(source) => savePost(source)}
+  downloadFileName="my-post.md"
+/>
+```
+
+`onSave` receives the exact Markdown string and can return a promise. The library
+leaves persistence to the consuming app. Failed saves retain the draft and allow
+retrying; editing while saving preserves the newer unsaved changes. Without
+`onSave`, the editor still supports editing, preview, and download. Set
+`downloadFileName={false}` to hide Download. `defaultValue` supports uncontrolled
+use, and `textareaProps` forwards native form/validation attributes.
+
+The compact toolbar keeps Bold/Italic visible and groups other actions into
+Format, List, and Insert dropdowns. Undo/Redo includes typing and formatting.
+Tooltips explain controls on hover and focus. Ctrl/Command+B, I, and K format;
+Z undoes, Shift+Z or Y redoes, and S saves. Write/Preview preserves source.
+
+`Markdown` separately renders a string as children. It uses `react-markdown` with
+`remark-gfm` for CommonMark, tables, task lists, and strikethrough. Raw HTML is
+skipped, the renderer's URL filtering remains enabled, and images use the
+library's fallback behavior. The renderer is bundled into both ESM and CommonJS
+outputs; dependency notices ship in `dist/THIRD_PARTY_NOTICES.txt`.
+
 ## Tooltip
 
 `Tooltip` adds airy, themed help to one focusable element or component that

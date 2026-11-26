@@ -1,6 +1,11 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { Link as RouterLink, MemoryRouter, useLocation } from "react-router-dom";
 import { App } from "./App";
+import { blogMarkdownStorageKey } from "./pages/BlogComponents/sections/MarkdownEditorExample";
+
+beforeEach(() => {
+  localStorage.removeItem(blogMarkdownStorageKey);
+});
 
 function LocationProbe() {
   const { pathname, search, hash } = useLocation();
@@ -242,4 +247,19 @@ it("opens Blog Components directly and returns home through its parent breadcrum
   expect(screen.getByTestId("location").textContent).toBe("/");
   expect(screen.getByRole("heading", { level: 1, name: "Dashboard" })).toBeInTheDocument();
   expect(within(screen.getByRole("navigation", { name: "Breadcrumb" })).getAllByRole("listitem")).toHaveLength(1);
+});
+
+it("shows the Markdown editor on Blog Components and reloads a saved post", async () => {
+  const first = renderApp(["/blog-components"]);
+  expect(screen.getByRole("heading", { name: "Markdown Editor" })).toBeInTheDocument();
+  const markdown = "# My saved post\n\n**A small story.**";
+  fireEvent.change(screen.getByRole("textbox", { name: "Post content" }), { target: { value: markdown } });
+  fireEvent.click(screen.getByRole("button", { name: "Save" }));
+  expect(await screen.findByText("Saved.")).toBeInTheDocument();
+  expect(localStorage.getItem(blogMarkdownStorageKey)).toBe(markdown);
+  first.unmount();
+  renderApp(["/blog-components"]);
+  expect(screen.getByRole("textbox", { name: "Post content" })).toHaveValue(markdown);
+  fireEvent.click(screen.getByRole("button", { name: "Preview" }));
+  expect(within(screen.getByRole("region", { name: "Markdown preview" })).getByRole("heading", { name: "My saved post" })).toBeInTheDocument();
 });

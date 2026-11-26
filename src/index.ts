@@ -2,7 +2,10 @@ import "./styles.css";
 
 export { Tooltip } from "./components/Tooltip/Tooltip";
 export type { TooltipProps } from "./components/Tooltip/Tooltip";
-
+export { Markdown } from "./components/Markdown/Markdown";
+export type { MarkdownProps } from "./components/Markdown/Markdown";
+export { MarkdownEditor } from "./components/Markdown/MarkdownEditor";
+export type { MarkdownEditorProps } from "./components/Markdown/MarkdownEditor";
 export { Modal } from "./components/Modal/Modal";
 export type { ModalProps, ModalSize } from "./components/Modal/Modal";
 export { Drawer } from "./components/Drawer/Drawer";

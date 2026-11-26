@@ -1,0 +1,37 @@
+MarkdownEditor Props
+
+- value / onChange(markdown): controlled raw Markdown string.
+- defaultValue: initial Markdown for an uncontrolled editor.
+- onSave(markdown): optional synchronous/async persistence callback. Save passes
+  the exact source string; the consuming app owns its storage destination.
+- label: visible textarea label (default Markdown).
+- description: optional associated hint.
+- name, rows, placeholder: native textarea settings (rows defaults to 14).
+- disabled / readOnly: prevent edits; read-only content still supports preview/download.
+- saveLabel: Save button text (default Save). Save is shown when onSave is supplied.
+- downloadFileName: defaults to document.md; false hides Download. Missing .md
+  extensions are appended. Downloads use text/markdown UTF-8 content.
+- textareaProps: additional native textarea props, including form/validation,
+  descriptions, focus handlers, and onKeyDown. preventDefault cancels shortcuts.
+- Native outer div props, sx/style, class/className are supported.
+
+The compact toolbar keeps Bold/Italic and Undo/Redo visible. Format, List, and
+Insert dropdowns group headings, quotes, strikethrough, lists/tasks, links,
+images, code, tables, and horizontal rules. Descriptive tooltips work on hover
+and focus. Native dropdown keys and Tab remain available.
+
+Formatting preserves source selection, inserts editable placeholders when
+needed, and returns focus to the textarea. Links/images select their URL so it
+can be replaced. Undo history includes typing and toolbar edits (100 snapshots).
+External value changes start a fresh history. Ctrl/Command+B, I, K format;
+Z undoes, Shift+Z or Y redoes, and S saves when onSave is supplied.
+
+Write/Preview keeps raw Markdown intact. Preview supports CommonMark and GFM
+tables, tasks, and strikethrough. Raw HTML is skipped and unsafe URL schemes are
+filtered by the renderer. The Markdown component separately renders a string
+passed as children, with native div props and class/style overrides.
+
+Async saves show progress, prevent concurrent saves, retain content on failure,
+and preserve newer unsaved edits when an earlier snapshot finishes saving.
+Components inherit theme colors, typography, font scaling, flat fills, diagonal
+corners, rounded focus indications, and reduced-motion preferences.
