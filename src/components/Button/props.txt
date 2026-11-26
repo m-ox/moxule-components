@@ -1,0 +1,21 @@
+Button Props
+
+Component: Button
+Source: src/components/Button/Button.tsx
+
+Expected props:
+- children (required): ReactNode content rendered inside the button.
+- variant (optional): "primary" | "secondary" | "ghost".
+  Default: "primary".
+- size (optional): "xs" | "sm" | "md" | "lg" | "xl".
+  Default: "md".
+- sx (optional): style override object applied before `style`.
+- class (optional): additional class string merged with `className`.
+
+Inherited props:
+- All standard button HTML attributes are supported via ButtonHTMLAttributes<HTMLButtonElement>.
+- Common examples: onClick, type, disabled, aria-label, className, style.
+
+Notes:
+- If no `type` is provided, the component sets type="button" by default.
+- Colors are theme-aware and use CSS variables from ThemeProvider when present.

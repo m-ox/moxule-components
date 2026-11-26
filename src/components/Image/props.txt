@@ -1,0 +1,16 @@
+Image Props
+
+Component: Image
+Source: src/components/Image/Image.tsx
+
+Expected props:
+- sx (optional): style override object applied before style.
+- class (optional): additional class string merged with className.
+
+Inherited props:
+- All standard image HTML attributes are supported via ImgHTMLAttributes<HTMLImageElement>.
+- Common examples: src, alt, width, height, loading, decoding, onError, className, style.
+
+Notes:
+- Image renders as an <img> element.
+- Default styles: display block, max-width 100%, and auto height.

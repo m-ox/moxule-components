@@ -1,0 +1,19 @@
+Dropdown Props
+
+Component: Dropdown
+Source: src/components/Dropdown/Dropdown.tsx
+
+Expected props:
+- options (required): list of options as `{ label, value }`.
+- value (required): currently selected option value.
+- onChange (required): callback receiving the selected value string.
+- sx (optional): style override object applied before style.
+- class (optional): additional class string merged with className.
+
+Inherited props:
+- Standard select HTML attributes via SelectHTMLAttributes<HTMLSelectElement>.
+- Common examples: id, name, disabled, aria-label, className, style.
+
+Notes:
+- Dropdown renders as a `<select>` element.
+- The component applies theme-aware border, background, and text colors.

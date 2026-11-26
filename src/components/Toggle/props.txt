@@ -1,0 +1,21 @@
+Toggle Props
+
+Component: Toggle
+Source: src/components/Toggle/Toggle.tsx
+
+Expected props:
+- checked (required): boolean state of the toggle.
+- onCheckedChange (required): callback receiving the next checked value.
+- ariaLabel (optional): accessible label announced by assistive technologies.
+  Default: "Toggle".
+- sx (optional): style override object applied before `style`.
+- class (optional): additional class string merged with `className`.
+
+Inherited props:
+- Most standard button HTML attributes are supported via ButtonHTMLAttributes<HTMLButtonElement>
+  (excluding `onChange` and `children`).
+- Common examples: disabled, id, className, style, data-* attributes, aria-* attributes.
+
+Notes:
+- Toggle renders as a `<button>` with `role="switch"` and `aria-checked`.
+- Visual style is a classic track + sliding thumb bubble.

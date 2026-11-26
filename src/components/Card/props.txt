@@ -1,0 +1,22 @@
+Card Props
+
+Component: Card
+Source: src/components/Card/Card.tsx
+
+Expected props:
+- children (required): ReactNode rendered inside the card.
+- color (optional): applies another theme's surface/text/border tokens to this card.
+- appearance (optional): visual treatment for card chrome.
+	- solid (default): filled surface with border and elevation.
+	- outline: transparent fill with border only.
+	- none: no border or fill, content-only container.
+- sx (optional): style override object applied before `style`.
+- class (optional): additional class string merged with `className`.
+
+Inherited props:
+- Standard HTML attributes for HTMLElement are supported via HTMLAttributes<HTMLElement>.
+- Common examples: id, role, className, style, data-* attributes, aria-* attributes.
+
+Notes:
+- Card renders as an <article> element.
+- Uses theme surface, text, and border tokens by default.

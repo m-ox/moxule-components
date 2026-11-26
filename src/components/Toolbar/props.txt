@@ -1,0 +1,25 @@
+Toolbar Props
+
+Component: Toolbar
+Source: src/components/Toolbar/Toolbar.tsx
+
+Expected props:
+- left (optional): ReactNode rendered on the left side of the toolbar.
+- right (optional): ReactNode rendered on the right side of the toolbar.
+- position (optional): toolbar scroll behavior.
+	- sticky (default): stays pinned to top while page scrolls.
+	- static: normal document flow.
+- logo (optional): ReactNode rendered on the left side of the toolbar.
+- children (optional): ReactNode rendered on the right side of the toolbar.
+- sx (optional): style override object applied before `style`.
+- class (optional): additional class string merged with `className`.
+
+Inherited props:
+- All standard HTML attributes for HTMLElement are supported via HTMLAttributes<HTMLElement>.
+- Common examples: id, role, className, style, data-* attributes, aria-* attributes.
+
+Notes:
+- Toolbar renders as a <header> element.
+- Preferred API: `left` and `right` for two explicit toolbar slots.
+- Backward compatibility: `logo` maps to left and `children` maps to right.
+- Border/background/text use theme CSS variables when ThemeProvider is used.

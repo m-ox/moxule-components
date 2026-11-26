@@ -1,0 +1,25 @@
+Footer Props
+
+Component: Footer
+Source: src/components/Footer/Footer.tsx
+
+Expected props:
+- children (optional): content rendered inside footer.
+- layout (optional): "centered" | "split".
+  Default: "centered".
+  - centered: centers all wrapped content.
+  - split: wraps each child in equal-width containers to distribute items proportionally.
+- position (optional): "static" | "natural".
+  Default: "natural".
+  - static: fixes footer to the viewport bottom.
+  - natural: renders footer in normal page flow (best for long pages).
+- sx (optional): style override object applied before `style`.
+- class (optional): additional class string merged with `className`.
+
+Inherited props:
+- All standard HTML attributes for HTMLElement are supported via HTMLAttributes<HTMLElement>.
+- Common examples: id, role, className, style, data-* attributes, aria-* attributes.
+
+Notes:
+- Footer renders as a <footer> element.
+- Uses theme CSS variables for border/background/text colors when ThemeProvider is present.

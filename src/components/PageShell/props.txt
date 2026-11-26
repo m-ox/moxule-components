@@ -1,0 +1,21 @@
+PageShell Props
+
+Component: PageShell
+Source: src/components/PageShell/PageShell.tsx
+
+Expected props:
+- children (required): ReactNode rendered inside the shell.
+- footerOffset (optional): "xs" | "sm" | "md" | "lg" | "xl".
+  Default: "xl".
+  Reserves bottom space for fixed/static footers.
+- fullHeight (optional): boolean.
+  Default: true.
+  When true, shell uses min-height: 100vh.
+- sx (optional): style override object applied before style.
+- class (optional): additional class string merged with className.
+
+Inherited props:
+- All standard div HTML attributes via HTMLAttributes<HTMLDivElement>.
+
+Notes:
+- Designed for page-level layout shells (toolbar + main + footer).
