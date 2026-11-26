@@ -4,7 +4,7 @@ Component: Breadcrumbs
 Source: src/components/Breadcrumbs/Breadcrumbs.tsx
 
 - items (required): readonly array of { label, href? }, ordered from root to current page.
-- separator (optional): decorative content between items; defaults to a small lightning bolt.
+- separator (optional): custom inline separator. Omit for the connected rail design.
 - renderLink (optional): receives (item, index), returns an anchor-compatible element.
   Only used for ancestors with an href. Supports React Router Link and NavLink;
   the library Link applies theme styling with asChild.
@@ -16,6 +16,9 @@ Source: src/components/Breadcrumbs/Breadcrumbs.tsx
 Renders a labelled navigation landmark and ordered list. Separators are hidden
 from assistive technology. Links are keyboard-focusable and inherit theme colors
 and font scaling. Each ancestor has an outlined circle; the current page has a
-filled circle. Markers and lightning bolts follow the theme accent. The circles
-are decorative and do not change accessible names. The trail has no background,
-container border, or shadow.
+filled circle. A thin upper line drops vertically to each ancestor and diagonally
+to the final node. Lines follow the theme accent, recalculate with font/size
+changes, and wrap onto separate rows without a horizontal scroller. A single
+page only shows its filled node. Explicit separators replace the rail design.
+Markers and lines are decorative and do not change accessible names. The trail
+has no background, container border, or shadow.

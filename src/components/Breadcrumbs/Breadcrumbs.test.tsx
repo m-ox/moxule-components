@@ -15,7 +15,8 @@ describe("Breadcrumbs", () => {
     expect(within(nav).getByText("Dashboard")).toHaveAttribute("aria-current", "page");
     expect(within(nav).queryByRole("link", { name: "Dashboard" })).not.toBeInTheDocument();
     expect(container.querySelectorAll('[aria-current="page"]')).toHaveLength(1);
-    for (const separator of container.querySelectorAll(".mx-breadcrumbs-separator")) expect(separator).toHaveAttribute("aria-hidden", "true");
+    expect(container.querySelector(".mx-breadcrumbs-connectors")).toHaveAttribute("aria-hidden", "true");
+    expect(container.querySelector(".mx-breadcrumbs-separator")).toBeNull();
     expect(container.querySelectorAll("[style]")).toHaveLength(0);
     const home = screen.getByRole("link", { name: "Home" });
     home.focus();
@@ -45,12 +46,14 @@ describe("Breadcrumbs", () => {
     expect(nav).toHaveClass("mx-breadcrumbs", "custom");
     expect(nav).toHaveStyle({ margin: "2rem" });
     expect(screen.getAllByText(">")).toHaveLength(2);
+    expect(nav.querySelector(".mx-breadcrumbs-connectors")).toBeNull();
   });
 
   it("handles a single current page, unlinked ancestors, and externally labelled navigation", () => {
     const { rerender } = render(<Breadcrumbs items={[{ label: "Dashboard" }]} />);
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
     expect(screen.getByText("Dashboard")).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("navigation").querySelector(".mx-breadcrumbs-connectors")).toBeNull();
     rerender(<><h2 id="path-title">Page hierarchy</h2><Breadcrumbs aria-labelledby="path-title" items={[{ label: "Library" }, { label: "Dashboard" }]} /></>);
     expect(screen.getByRole("navigation", { name: "Page hierarchy" })).not.toHaveAttribute("aria-label");
     expect(screen.getByText("Library")).not.toHaveAttribute("aria-current");

@@ -106,7 +106,8 @@ it("renders Dashboard as home and supplies breadcrumbs above the page", () => {
   renderApp(["/"]);
   expect(screen.getByTestId("location").textContent).toBe("/");
   const main = screen.getByRole("main");
-  const breadcrumbs = within(main).getByRole("navigation", { name: "Breadcrumb" });
+  const breadcrumbs = screen.getByRole("navigation", { name: "Breadcrumb" });
+  expect(screen.getByRole("banner").parentElement).toContainElement(breadcrumbs);
   expect(within(breadcrumbs).getByText("Dashboard")).toHaveAttribute("aria-current", "page");
   expect(within(breadcrumbs).getAllByRole("listitem")).toHaveLength(1);
   expect(within(breadcrumbs).queryByRole("link")).not.toBeInTheDocument();

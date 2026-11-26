@@ -21,7 +21,9 @@ anchors; unknown URLs show a page with a link back to Dashboard.
 
 `NavRouter.tsx` owns route definitions and their `handle.breadcrumb` labels.
 It supplies the matching breadcrumb trail to `AppLayout`, which displays it
-above the page content alongside the shared navbar and natural footer.
+above the page content in the sticky header area, just below the navbar.
+Breadcrumbs use half the content's side padding to sit a little farther left.
+The footer remains in normal page flow.
 Add new page routes and their breadcrumb labels in `NavRouter`.
 The trail follows matched route ancestry: Dashboard shows a single current-page
 marker, and nested pages add their actual parent steps.
@@ -544,10 +546,13 @@ lets you trigger each status, the current theme color, and custom-color examples
 `Breadcrumbs` renders an accessible ordered navigation trail using themed
 `Link` components. Pass `items` from root to current page. The last item is
 plain text with `aria-current="page"`. Parent pages have outlined circles and the
-current page has a filled circle, with small lightning bolts between steps.
-Markers and separators use the theme accent and are decorative. Empty trails
-render nothing. Customize the navigation name with `aria-label` and the
-separator with `separator`.
+current page has a filled circle. A thin line runs above the trail, drops down
+to ancestor nodes, and slopes down to the current node. Lines adapt when text
+or viewport sizes change, with separate rails for wrapped rows and no horizontal
+scroller. Markers and lines use the theme accent and are decorative. Empty
+trails render nothing; a single page has no connecting line. Customize the
+navigation name with `aria-label`, or supply `separator` for custom inline
+separators in place of the rail.
 
 ```tsx
 <Breadcrumbs items={[
