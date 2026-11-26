@@ -1,0 +1,22 @@
+RadioGroup Props
+
+Component: RadioGroup
+Source: src/components/RadioGroup/RadioGroup.tsx
+
+- legend (required): visible group label, rendered inside the component's legend.
+- options (required): readonly list of { label: ReactNode, value: string, disabled?: boolean }.
+  Each option value must be unique within the group.
+- description (optional): group hint automatically associated via aria-describedby.
+- name (optional): shared native radio name for form submission; generated when omitted.
+- value (optional): controlled selected option value.
+- defaultValue (optional): initial uncontrolled selection, with native form reset behavior.
+- onChange (optional): receives the newly selected option value as a string.
+- disabled (optional): disables all options.
+- required (optional): requires a selection for native form validation.
+- form (optional): associates the fieldset and its inputs with an external form.
+- ref targets the native fieldset.
+- sx/style and class/className apply to the fieldset.
+- Other native fieldset attributes are forwarded.
+
+The component owns its fieldset, legend, description, and list of native Radio inputs.
+Default styles live in the library stylesheet and inherit the active theme.

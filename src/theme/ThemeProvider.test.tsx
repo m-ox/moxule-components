@@ -24,5 +24,6 @@ describe("ThemeProvider", () => {
 
     const root = screen.getByTestId("theme-root");
     expect(root).toHaveStyle("--mx-button-primary-bg: #ff0000");
+    expect(root).toHaveStyle("--mx-page-shell-bg: #ffeff7");
   });
 });

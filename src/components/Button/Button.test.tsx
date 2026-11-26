@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Button } from "./Button";
 
 describe("Button", () => {
@@ -16,9 +16,9 @@ describe("Button", () => {
     render(<Button>Focusable</Button>);
     const button = screen.getByRole("button", { name: "Focusable" });
 
-    fireEvent.focus(button);
+    button.focus();
 
-    expect(button).toHaveStyle("outline: 2px solid var(--mx-button-primary-bg, #1f5ed8)");
-    expect(button).toHaveStyle("box-shadow: 0 0 0 4px rgba(31, 94, 216, 0.28)");
+    expect(button).toHaveStyle("outline: 2px solid var(--mx-color-text, #1d3558)");
+    expect(button).toHaveStyle("outline-offset: 2px");
   });
 });

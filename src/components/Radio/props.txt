@@ -1,0 +1,14 @@
+Radio Props
+
+Component: Radio
+Source: src/components/Radio/Radio.tsx
+
+- label (required): visible accessible label, rendered as ReactNode.
+- Supports native radio props including checked, defaultChecked, onChange,
+  disabled, required, name, value, id, and aria-describedby.
+- ref targets the native input for focus and native input APIs.
+- sx/style and class/className apply to the input.
+- Prefer RadioGroup for a list of options; it supplies the fieldset, legend, and shared name.
+- For custom grouping, use a shared name and a fieldset with a legend.
+- Native radio behavior supports arrow keys, Space, and exclusive selection.
+- Theme colors, native browser appearance, and visible focus outlines are preserved.

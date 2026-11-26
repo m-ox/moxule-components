@@ -1,0 +1,12 @@
+Checkbox Props
+
+Component: Checkbox
+Source: src/components/Checkbox/Checkbox.tsx
+
+- label (required): visible accessible label, rendered as ReactNode.
+- Supports native checkbox props including checked, defaultChecked, onChange,
+  disabled, required, name, value, id, and aria-describedby.
+- ref targets the native input for focus and native input APIs.
+- sx/style and class/className apply to the input.
+- Native checkbox behavior supports Space, form submission, and validation.
+- Theme colors, native browser appearance, and visible focus outlines are preserved.

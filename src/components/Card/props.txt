@@ -5,10 +5,10 @@ Source: src/components/Card/Card.tsx
 
 Expected props:
 - children (required): ReactNode rendered inside the card.
-- color (optional): applies another theme's surface/text/border tokens to this card.
+- color (optional): applies another theme's surface/text tokens.
 - appearance (optional): visual treatment for card chrome.
-	- solid (default): filled surface with border and elevation.
-	- outline: transparent fill with border only.
+	- solid (default): flat filled surface with no border or shadow.
+	- outline: legacy transparent appearance with no border or shadow.
 	- none: no border or fill, content-only container.
 - sx (optional): style override object applied before `style`.
 - class (optional): additional class string merged with `className`.
@@ -19,4 +19,4 @@ Inherited props:
 
 Notes:
 - Card renders as an <article> element.
-- Uses theme surface, text, and border tokens by default.
+- Uses theme surface and text tokens by default. All appearances are borderless and shadowless.

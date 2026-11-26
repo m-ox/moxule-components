@@ -2,12 +2,16 @@ import { useState } from "react";
 import {
   Button,
   Card,
+  Checkbox,
   Dropdown,
   Footer,
   Header,
   Image,
   Layout,
+  Link,
   PageShell,
+  RadioGroup,
+  Section,
   Text,
   Toggle,
   Toolbar,
@@ -18,10 +22,10 @@ import {
 } from "../index";
 
 const fontStylePreview = [
-  { name: "clear", family: '"Cantarell", sans-serif', letterSpacing: "0.01em" },
-  { name: "playful", family: '"DynaPuff", sans-serif', letterSpacing: "0.01em" },
-  { name: "stark", family: '"Martel", serif', letterSpacing: "0.01em" },
-  { name: "bizarre", family: '"Loved by the King", cursive', letterSpacing: "0.06em" }
+  { name: "clear" },
+  { name: "playful" },
+  { name: "stark" },
+  { name: "bizarre" }
 ] as const;
 
 const themeOptions = [
@@ -39,53 +43,32 @@ export function App() {
   const [mode, setMode] = useState<ThemeMode>("light");
   const [fontStyle, setFontStyle] = useState<FontStyleName>("playful");
   const [theme, setTheme] = useState<ThemeName>("primary");
-  const [logoBroken, setLogoBroken] = useState(false);
+  const [buttonPresses, setButtonPresses] = useState(0);
+  const [componentSize, setComponentSize] = useState("medium");
+  const [density, setDensity] = useState("comfortable");
+  const [notifications, setNotifications] = useState(false);
 
   return (
     <ThemeProvider
       mode={mode}
       theme={theme}
       fontStyle={fontStyle}
-      style={{ minHeight: "100vh" }}
+      data-demo-density={density}
+      data-demo-size={componentSize}
+      className="mx-demo"
     >
-      <PageShell footerOffset="xl">
+      <PageShell>
         <Toolbar
           left={
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              {logoBroken ? (
-                <span
-                  aria-hidden="true"
-                  style={{
-                    width: "1.65rem",
-                    height: "1.65rem",
-                    borderRadius: "999px",
-                    border: "1px solid currentColor",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "0.8rem",
-                    fontWeight: 700
-                  }}
-                >
-                  M
-                </span>
-              ) : (
-                <Image
-                  src="/src/demo/favicon.ico"
-                  alt="Moxules logo"
-                  width={26}
-                  height={26}
-                  onError={() => setLogoBroken(true)}
-                  sx={{
-                    width: "1.65rem",
-                    height: "1.65rem",
-                    borderRadius: "999px",
-                    objectFit: "cover",
-                    border: "1px solid currentColor"
-                  }}
-                />
-              )}
-              <strong style={{ letterSpacing: "0.02em" }}>Moxules</strong>
+            <div className="mx-demo-brand">
+              <Image
+                src="/src/demo/favicon.ico"
+                alt="Moxules logo"
+                width={26}
+                height={26}
+                className="mx-demo-logo"
+              />
+              <strong className="mx-demo-brand-name">Moxules</strong>
             </div>
           }
           right={
@@ -97,54 +80,43 @@ export function App() {
           }
         />
 
-        <Layout margin="lg" contentWidth="md" style={{ flex: 1, paddingBlock: "2.5rem" }}>
-          <section style={{ display: "grid", gap: "1.25rem" }}>
-            <Header variant="h2" sx={{ fontSize: "2rem", lineHeight: 1.2 }}>
-              Component Library Demo
-            </Header>
-            <Text>
-              This page demonstrates the current moxule-components primitives. The top toolbar
-              uses only the left logo slot, the center content is wrapped with Layout spacing,
-              and the footer sits at the bottom.
-            </Text>
-
-            <div style={{ display: "grid", gap: "0.75rem" }}>
-              <Header variant="h3" sx={{ fontSize: "1.2rem" }}>
-                Font Style Preview
-              </Header>
-              <Text variant="sm" sx={{ lineHeight: 1.5 }}>
-                Quick QA snapshot for display font styles. Body text remains Gudea by default.
-              </Text>
+        <Layout margin="lg" contentWidth="md" className="mx-demo-layout">
+          <Section
+            title="Component Library Demo"
+            description="This page demonstrates the current moxule-components primitives. The top toolbar uses only the left logo slot, the center content is wrapped with Layout spacing, and the footer sits at the bottom."
+            headingProps={{ className: "mx-demo-title" }}
+            className="mx-demo-stack"
+          >
+            <Section
+              title="Font Style Preview"
+              description="Quick QA snapshot for display font styles. Body text remains Gudea by default."
+              headingLevel="h3"
+              headingProps={{ className: "mx-demo-section-title" }}
+              descriptionProps={{ variant: "sm", className: "mx-demo-description" }}
+            >
 
               <div
-                style={{
-                  display: "grid",
-                  gap: "0.75rem",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))"
-                }}
+                className="mx-demo-preview-grid"
               >
                 {fontStylePreview.map((item) => (
                   <Card
                     key={item.name}
+                    className="mx-demo-card"
                   >
                     <Header
                       variant="h4"
-                      sx={{
-                        fontFamily: item.family,
-                        letterSpacing: item.letterSpacing,
-                        fontSize: "1.35rem",
-                        lineHeight: 1.2
-                      }}
+                      className="mx-demo-font"
+                      data-demo-font={item.name}
                     >
                       {item.name}
                     </Header>
-                    <Text variant="sm" sx={{ marginTop: "0.5rem", lineHeight: 1.45 }}>
+                    <Text variant="sm" className="mx-demo-card-copy">
                       The quick brown fox jumps over the lazy dog.
                     </Text>
                     <Button
                       size="sm"
                       variant={fontStyle === item.name ? "primary" : "secondary"}
-                      sx={{ marginTop: "0.75rem" }}
+                      className="mx-demo-spaced"
                       onClick={() => setFontStyle(item.name)}
                     >
                       {fontStyle === item.name ? "Selected" : `Use ${item.name}`}
@@ -152,44 +124,40 @@ export function App() {
                   </Card>
                 ))}
               </div>
-            </div>
+            </Section>
 
-            <div style={{ display: "grid", gap: "0.75rem" }}>
-              <Header variant="h3" sx={{ fontSize: "1.2rem" }}>
-                Theme Color Preview
-              </Header>
-              <Text variant="sm" sx={{ lineHeight: 1.5 }}>
-                Select a default theme from the dropdown or click a card to apply it instantly.
-              </Text>
+            <Section
+              title="Theme Color Preview"
+              description="Select a default theme from the dropdown or click a card to apply it instantly."
+              headingLevel="h3"
+              headingProps={{ className: "mx-demo-section-title" }}
+              descriptionProps={{ variant: "sm", className: "mx-demo-description" }}
+            >
 
               <Dropdown
                 aria-label="Theme selector"
                 options={themeOptions.map((item) => ({ label: item.label, value: item.value }))}
                 value={theme}
                 onChange={(value) => setTheme(value as ThemeName)}
-                sx={{ width: "220px" }}
+                className="mx-demo-theme-select"
               />
 
               <div
-                style={{
-                  display: "grid",
-                  gap: "0.75rem",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))"
-                }}
+                className="mx-demo-preview-grid"
               >
                 {themeOptions.map((item) => (
-                  <Card key={item.value} color={item.value}>
-                    <Header variant="h4" color={item.value} sx={{ fontSize: "1.2rem", lineHeight: 1.2 }}>
+                  <Card key={item.value} color={item.value} className="mx-demo-card">
+                    <Header variant="h4" color={item.value} className="mx-demo-theme-title">
                       {item.label}
                     </Header>
-                    <Text variant="sm" color={item.value} sx={{ marginTop: "0.5rem", lineHeight: 1.45 }}>
+                    <Text variant="sm" color={item.value} className="mx-demo-card-copy">
                       Apply the {item.label.toLowerCase()} default color tokens.
                     </Text>
                     <Button
                       size="sm"
                       color={item.value}
                       variant={theme === item.value ? "primary" : "secondary"}
-                      sx={{ marginTop: "0.75rem" }}
+                      className="mx-demo-spaced"
                       onClick={() => setTheme(item.value)}
                     >
                       {theme === item.value ? "Selected" : `Use ${item.label}`}
@@ -197,14 +165,76 @@ export function App() {
                   </Card>
                 ))}
               </div>
-            </div>
-          </section>
+            </Section>
+            <Section
+              title="General Components"
+              description="Try the controls below with the current theme. Use Tab to move between controls, Space to select, and arrow keys to change radio or dropdown options."
+              headingLevel="h3"
+              headingProps={{ id: "general-components-title", className: "mx-demo-section-title" }}
+              descriptionProps={{ variant: "sm", className: "mx-demo-description" }}
+            >
+              <div className="mx-demo-controls-grid">
+                <Card className="mx-demo-card">
+                  <Header variant="h4" className="mx-demo-control-title">Button</Header>
+                  <div className="mx-demo-actions">
+                    <Button onClick={() => setButtonPresses((count) => count + 1)}>Try button</Button>
+                    <Button variant="secondary" disabled>Disabled</Button>
+                  </div>
+                  <Text role="status" variant="sm" className="mx-demo-spaced">
+                    {buttonPresses === 0 ? "Ready to try." : `Button pressed ${buttonPresses} ${buttonPresses === 1 ? "time" : "times"}.`}
+                  </Text>
+                </Card>
+                <Card className="mx-demo-card">
+                  <Header variant="h4" className="mx-demo-control-title">Dropdown Select</Header>
+                  <label htmlFor="component-size" className="mx-demo-label">Size</label>
+                  <Text id="component-size-hint" variant="sm">Scale text across the preview.</Text>
+                  <Dropdown
+                    id="component-size"
+                    name="componentSize"
+                    aria-describedby="component-size-hint"
+                    value={componentSize}
+                    onChange={setComponentSize}
+                    options={[
+                      { label: "Small", value: "small" },
+                      { label: "Medium", value: "medium" },
+                      { label: "Large", value: "large" }
+                    ]}
+                    className="mx-demo-select"
+                  />
+                </Card>
+                <Card className="mx-demo-card">
+                  <Header variant="h4" className="mx-demo-control-title">Radio</Header>
+                  <RadioGroup
+                    name="density"
+                    legend="Display density"
+                    description="Adjust spacing across the preview."
+                    options={[
+                      { label: "Comfortable", value: "comfortable" },
+                      { label: "Compact", value: "compact" }
+                    ]}
+                    value={density}
+                    onChange={setDensity}
+                  />
+                </Card>
+                <Card className="mx-demo-card">
+                  <Header variant="h4" className="mx-demo-control-title">Checkbox</Header>
+                  <Checkbox
+                    name="notifications"
+                    label="Enable notifications"
+                    checked={notifications}
+                    onChange={(event) => setNotifications(event.target.checked)}
+                  />
+                  <Checkbox label="Unavailable option" disabled />
+                </Card>
+              </div>
+            </Section>
+          </Section>
         </Layout>
 
-        <Footer layout="centered" position="static">
-          <a href="#overview">Overview</a>
-          <a href="#docs">Docs</a>
-          <a href="#support">Support</a>
+        <Footer layout="centered" position="natural">
+          <Link href="#overview" color="inherit">Overview</Link>
+          <Link href="#docs" color="inherit">Docs</Link>
+          <Link href="#support" color="inherit">Support</Link>
         </Footer>
       </PageShell>
     </ThemeProvider>

@@ -19,5 +19,5 @@ Inherited props:
 - Common examples: id, className, style, data-* attributes, aria-* attributes.
 
 Notes:
-- Layout uses the theme text color and a transparent background so the parent page background shows through.
+- Layout uses the theme text color and the same neighboring-hue page background as PageShell.
 - `style` and other HTML props are applied to the inner constrained content wrapper.

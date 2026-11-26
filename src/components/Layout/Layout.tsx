@@ -1,5 +1,5 @@
 import type { HTMLAttributes, ReactNode } from "react";
-import { contentWidthScale, spacingScale, type SizeScale } from "../../system/scale";
+import type { SizeScale } from "../../system/scale";
 
 export interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -8,18 +8,6 @@ export interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   sx?: React.CSSProperties;
   class?: string;
 }
-
-const wrapperStyle: React.CSSProperties = {
-  width: "100%",
-  color: "var(--mx-color-text, #0f172a)",
-  boxSizing: "border-box"
-};
-
-const contentStyle: React.CSSProperties = {
-  width: "100%",
-  marginInline: "auto",
-  boxSizing: "border-box"
-};
 
 export function Layout({
   children,
@@ -31,19 +19,13 @@ export function Layout({
   style,
   ...props
 }: LayoutProps) {
-  const mergedClassName = ["mx-layout", className, classProp].filter(Boolean).join(" ");
-
   return (
-    <div className="mx-layout-wrapper" style={wrapperStyle}>
+    <div className="mx-layout-wrapper">
       <div
-        className={mergedClassName}
-        style={{
-          ...contentStyle,
-          maxWidth: contentWidthScale[contentWidth],
-          paddingInline: spacingScale[margin],
-          ...sx,
-          ...style
-        }}
+        className={["mx-layout", className, classProp].filter(Boolean).join(" ")}
+        data-mx-margin={margin}
+        data-mx-content-width={contentWidth}
+        style={{ ...sx, ...style }}
         {...props}
       >
         {children}

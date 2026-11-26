@@ -69,6 +69,31 @@ interface ThemeSeed {
   accentGhostHover: string;
 }
 
+export function derivePageShellBackground(primaryColor: string, mode: ThemeMode): string {
+  let hex = primaryColor.trim().replace(/^#/, "");
+  if (/^[0-9a-f]{3}$/i.test(hex)) hex = hex.split("").map((digit) => digit + digit).join("");
+  if (!/^[0-9a-f]{6}$/i.test(hex)) return mode === "light" ? "#f7f7f7" : "#0c0c0c";
+
+  const [r, g, b] = [0, 2, 4].map((offset) => Number.parseInt(hex.slice(offset, offset + 2), 16));
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const delta = max - min;
+  if (delta === 0) return mode === "light" ? "#f7f7f7" : "#0c0c0c";
+
+  const sector = max === r ? (g - b) / delta : max === g ? (b - r) / delta + 2 : (r - g) / delta + 4;
+  const hue = ((sector * 60 - 30) % 360 + 360) % 360;
+  // Shift to a neighboring hue, with fixed off-white or subtle charcoal lightness.
+  const floor = mode === "light" ? 239 : 10;
+  const chroma = mode === "light" ? 16 : 4;
+  const x = chroma * (1 - Math.abs((hue / 60) % 2 - 1));
+  const channels = hue < 60 ? [chroma, x, 0]
+    : hue < 120 ? [x, chroma, 0]
+      : hue < 180 ? [0, chroma, x]
+        : hue < 240 ? [0, x, chroma]
+          : hue < 300 ? [x, 0, chroma] : [chroma, 0, x];
+  return `#${channels.map((channel) => Math.round(floor + channel).toString(16).padStart(2, "0")).join("")}`;
+}
+
 function buildTheme(seed: ThemeSeed, mode: ThemeMode): ThemeTokens {
   const statusTokens =
     mode === "light"
@@ -79,15 +104,15 @@ function buildTheme(seed: ThemeSeed, mode: ThemeMode): ThemeTokens {
           successBorder: "#8dd6b6",
           warningBg: "#dca22f",
           warningBgHover: "#ba8622",
-          warningText: "#3a2908",
+          warningText: "#302006",
           warningBorder: "#e7c67e",
           errorBg: "#f12a83",
-          errorBgHover: "#cf1f6e",
-          errorText: "#3d0f26",
+          errorBgHover: "#e83c8a",
+          errorText: "#220413",
           errorBorder: "#ee8fbe",
           neutralBg: "#6f7a84",
-          neutralBgHover: "#5c6670",
-          neutralText: "#1f2730",
+          neutralBgHover: "#737f89",
+          neutralText: "#05090c",
           neutralBorder: "#b4bcc4"
         }
       : {
@@ -111,8 +136,7 @@ function buildTheme(seed: ThemeSeed, mode: ThemeMode): ThemeTokens {
 
   return {
     surface: seed.surface,
-    // Keep the page neutral so themed card surfaces remain distinct.
-    pageShellBg: mode === "light" ? "#e8e8e8" : "#0c0c0c",
+    pageShellBg: derivePageShellBackground(seed.accent, mode),
     text: seed.text,
     border: seed.border,
     chromeBg: seed.chromeBg,
@@ -162,7 +186,7 @@ const primaryDark = buildTheme(
     chromeText: "#eaf0f8",
     accent: "#7f97b9",
     accentHover: "#6e88ad",
-    accentText: "#17283f",
+    accentText: "#0b1829",
     accentSoft: "#24364f",
     accentSoftHover: "#2d4260",
     accentSoftText: "#d7e2f2",
@@ -175,40 +199,40 @@ const primaryDark = buildTheme(
 
 const secondaryLight = buildTheme(
   {
-    surface: "#f6f7f8",
-    text: "#2e343b",
-    border: "#c7cdd3",
-    chromeBg: "#5f6f7f",
-    chromeText: "#f8fafc",
-    accent: "#5f6f7f",
-    accentHover: "#526170",
-    accentText: "#f8fafc",
-    accentSoft: "#dce1e6",
-    accentSoftHover: "#cfd6dc",
-    accentSoftText: "#2e343b",
-    accentGhost: "#4f5d6b",
-    accentGhostBorder: "#a8b0b8",
-    accentGhostHover: "rgba(95, 111, 127, 0.15)"
+    surface: "#ffffff",
+    text: "#292929",
+    border: "#c9c9c9",
+    chromeBg: "#666666",
+    chromeText: "#fafafa",
+    accent: "#666666",
+    accentHover: "#5a5a5a",
+    accentText: "#fafafa",
+    accentSoft: "#eaeaea",
+    accentSoftHover: "#dddddd",
+    accentSoftText: "#3d3d3d",
+    accentGhost: "#666666",
+    accentGhostBorder: "#9c9c9c",
+    accentGhostHover: "rgba(102, 102, 102, 0.12)"
   },
   "light"
 );
 
 const secondaryDark = buildTheme(
   {
-    surface: "#1f242a",
-    text: "#dde3e9",
-    border: "#4c5863",
-    chromeBg: "#3c4651",
-    chromeText: "#f3f6f9",
-    accent: "#9aa9b8",
-    accentHover: "#8798a8",
-    accentText: "#1b222a",
-    accentSoft: "#2d353d",
-    accentSoftHover: "#353f48",
-    accentSoftText: "#dde3e9",
-    accentGhost: "#b4c0cc",
-    accentGhostBorder: "#63707c",
-    accentGhostHover: "rgba(154, 169, 184, 0.18)"
+    surface: "#141414",
+    text: "#eaeaea",
+    border: "#757575",
+    chromeBg: "#4d4d4d",
+    chromeText: "#f6f6f6",
+    accent: "#a3a3a3",
+    accentHover: "#949494",
+    accentText: "#1a1a1a",
+    accentSoft: "#383838",
+    accentSoftHover: "#474747",
+    accentSoftText: "#eaeaea",
+    accentGhost: "#c9c9c9",
+    accentGhostBorder: "#8c8c8c",
+    accentGhostHover: "rgba(163, 163, 163, 0.2)"
   },
   "dark"
 );
@@ -226,7 +250,7 @@ const tertiaryLight = buildTheme(
     accentSoft: "#d7efea",
     accentSoftHover: "#c8e7e0",
     accentSoftText: "#0f3a33",
-    accentGhost: "#0f7f6d",
+    accentGhost: "#0d6d5d",
     accentGhostBorder: "#8bc4b8",
     accentGhostHover: "rgba(15, 127, 109, 0.14)"
   },
@@ -266,7 +290,7 @@ const blueLight = buildTheme(
     accentSoft: "#dce8ff",
     accentSoftHover: "#cfe0ff",
     accentSoftText: "#1a4b98",
-    accentGhost: "#2e72e8",
+    accentGhost: "#255fc7",
     accentGhostBorder: "#a8c1f3",
     accentGhostHover: "rgba(46, 114, 232, 0.14)"
   },
@@ -295,40 +319,40 @@ const blueDark = buildTheme(
 
 const redLight = buildTheme(
   {
-    surface: "#fff7fb",
-    text: "#4d2035",
-    border: "#efb1d0",
-    chromeBg: "#f12a83",
-    chromeText: "#2d0a1d",
-    accent: "#f12a83",
-    accentHover: "#d91f73",
-    accentText: "#fff4fa",
-    accentSoft: "#ffd8ea",
-    accentSoftHover: "#ffc8e1",
-    accentSoftText: "#6f244a",
-    accentGhost: "#f12a83",
-    accentGhostBorder: "#ea93bc",
-    accentGhostHover: "rgba(241, 42, 131, 0.14)"
+    surface: "#fbf8f8",
+    text: "#422125",
+    border: "#e0c3c6",
+    chromeBg: "#a6535c",
+    chromeText: "#fcfafa",
+    accent: "#a6535c",
+    accentHover: "#924951",
+    accentText: "#fcfafa",
+    accentSoft: "#f3e7e8",
+    accentSoftHover: "#ebd9db",
+    accentSoftText: "#643237",
+    accentGhost: "#924951",
+    accentGhostBorder: "#c58f95",
+    accentGhostHover: "rgba(166, 83, 92, 0.14)"
   },
   "light"
 );
 
 const redDark = buildTheme(
   {
-    surface: "#2a1320",
-    text: "#ffdce9",
-    border: "#8f486d",
-    chromeBg: "#c11d67",
-    chromeText: "#ffebf3",
-    accent: "#f56aa9",
-    accentHover: "#ef559b",
-    accentText: "#3e1227",
-    accentSoft: "#5a2340",
-    accentSoftHover: "#6a2b4c",
-    accentSoftText: "#ffdce9",
-    accentGhost: "#f7a7cc",
-    accentGhostBorder: "#995375",
-    accentGhostHover: "rgba(245, 106, 169, 0.2)"
+    surface: "#1b0d0f",
+    text: "#f3e9ea",
+    border: "#8d474e",
+    chromeBg: "#8d474e",
+    chromeText: "#faf5f5",
+    accent: "#c58f95",
+    accentHover: "#bc7e85",
+    accentText: "#2a1517",
+    accentSoft: "#532a2e",
+    accentSoftHover: "#6c363c",
+    accentSoftText: "#f3e9ea",
+    accentGhost: "#e0c3c6",
+    accentGhostBorder: "#b8757d",
+    accentGhostHover: "rgba(197, 143, 149, 0.2)"
   },
   "dark"
 );
@@ -346,7 +370,7 @@ const greenLight = buildTheme(
     accentSoft: "#d6f0eb",
     accentSoftHover: "#c5e9e2",
     accentSoftText: "#0d3a35",
-    accentGhost: "#0f7d72",
+    accentGhost: "#0d6d63",
     accentGhostBorder: "#86c6bc",
     accentGhostHover: "rgba(15, 125, 114, 0.14)"
   },
@@ -375,80 +399,80 @@ const greenDark = buildTheme(
 
 const purpleLight = buildTheme(
   {
-    surface: "#faf6ff",
-    text: "#3a2452",
-    border: "#cfb8eb",
-    chromeBg: "#7b4bd9",
-    chromeText: "#f8f4ff",
-    accent: "#7b4bd9",
-    accentHover: "#693bc4",
-    accentText: "#f8f4ff",
-    accentSoft: "#eadfff",
-    accentSoftHover: "#dfd1ff",
-    accentSoftText: "#4d3272",
-    accentGhost: "#7b4bd9",
-    accentGhostBorder: "#b899e8",
-    accentGhostHover: "rgba(123, 75, 217, 0.14)"
+    surface: "#f9f8fa",
+    text: "#2b213e",
+    border: "#c7c0d6",
+    chromeBg: "#5f4a89",
+    chromeText: "#fafafb",
+    accent: "#5f4a89",
+    accentHover: "#524076",
+    accentText: "#fafafb",
+    accentSoft: "#e9e6ee",
+    accentSoftHover: "#dcd7e5",
+    accentSoftText: "#392c52",
+    accentGhost: "#5f4a89",
+    accentGhostBorder: "#9789b2",
+    accentGhostHover: "rgba(95, 74, 137, 0.14)"
   },
   "light"
 );
 
 const purpleDark = buildTheme(
   {
-    surface: "#1e1630",
-    text: "#e8dcff",
-    border: "#5c4b80",
-    chromeBg: "#5f36af",
-    chromeText: "#f2ebff",
-    accent: "#b391ff",
-    accentHover: "#a57dff",
-    accentText: "#241440",
-    accentSoft: "#342553",
-    accentSoftHover: "#422f66",
-    accentSoftText: "#e8dcff",
-    accentGhost: "#c8adff",
-    accentGhostBorder: "#7661a8",
-    accentGhostHover: "rgba(179, 145, 255, 0.2)"
+    surface: "#130f1b",
+    text: "#e9e6ee",
+    border: "#6f5c95",
+    chromeBg: "#5f4a89",
+    chromeText: "#f5f4f8",
+    accent: "#9789b2",
+    accentHover: "#8777a7",
+    accentText: "#181322",
+    accentSoft: "#34294b",
+    accentSoftHover: "#433460",
+    accentSoftText: "#e9e6ee",
+    accentGhost: "#c7c0d6",
+    accentGhostBorder: "#8777a7",
+    accentGhostHover: "rgba(151, 137, 178, 0.2)"
   },
   "dark"
 );
 
 const pinkLight = buildTheme(
   {
-    surface: "#fff7ff",
-    text: "#4f2456",
-    border: "#f0baf0",
-    chromeBg: "#f858ee",
-    chromeText: "#4b1550",
-    accent: "#f858ee",
-    accentHover: "#e045d6",
-    accentText: "#4b1550",
-    accentSoft: "#ffdffd",
-    accentSoftHover: "#ffcffa",
-    accentSoftText: "#6d2f73",
-    accentGhost: "#f858ee",
-    accentGhostBorder: "#e59be1",
-    accentGhostHover: "rgba(248, 88, 238, 0.14)"
+    surface: "#fdf9fa",
+    text: "#422e33",
+    border: "#e9bdc8",
+    chromeBg: "#dd9aaa",
+    chromeText: "#2c1f22",
+    accent: "#dd9aaa",
+    accentHover: "#c78b99",
+    accentText: "#2c1f22",
+    accentSoft: "#f7e6ea",
+    accentSoftHover: "#f2d9df",
+    accentSoftText: "#583e44",
+    accentGhost: "#855c66",
+    accentGhostBorder: "#bc8391",
+    accentGhostHover: "rgba(221, 154, 170, 0.14)"
   },
   "light"
 );
 
 const pinkDark = buildTheme(
   {
-    surface: "#29162e",
-    text: "#ffe4ff",
-    border: "#8a5a93",
-    chromeBg: "#9f3499",
-    chromeText: "#ffedff",
-    accent: "#f37fec",
-    accentHover: "#eb68e2",
-    accentText: "#3c1540",
-    accentSoft: "#55295f",
-    accentSoftHover: "#673373",
-    accentSoftText: "#ffe4ff",
-    accentGhost: "#f6b4f2",
-    accentGhostBorder: "#9a66a6",
-    accentGhostHover: "rgba(243, 127, 236, 0.2)"
+    surface: "#1f1618",
+    text: "#faf0f2",
+    border: "#7a555e",
+    chromeBg: "#7a555e",
+    chromeText: "#fdf9fa",
+    accent: "#dd9aaa",
+    accentHover: "#cb8e9c",
+    accentText: "#2c1f22",
+    accentSoft: "#583e44",
+    accentSoftHover: "#6f4d55",
+    accentSoftText: "#faf0f2",
+    accentGhost: "#e9bdc8",
+    accentGhostBorder: "#a67480",
+    accentGhostHover: "rgba(221, 154, 170, 0.2)"
   },
   "dark"
 );

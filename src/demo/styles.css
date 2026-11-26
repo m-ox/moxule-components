@@ -15,11 +15,120 @@ body,
   min-height: 100%;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+
+.mx-demo {
+  min-height: 100vh;
+  --mx-font-scale: 1;
+  --mx-demo-grid-gap: 0.75rem;
+  --mx-demo-section-gap: 1.25rem;
+  --mx-demo-card-padding: 0.85rem;
+  --mx-demo-page-padding: 2.5rem;
+  --mx-section-gap: var(--mx-demo-grid-gap);
+}
+.mx-demo[data-demo-size="small"] { --mx-font-scale: 0.875; }
+.mx-demo[data-demo-size="large"] { --mx-font-scale: 1.125; }
+.mx-demo[data-demo-density="compact"] {
+  --mx-demo-grid-gap: 0.4rem;
+  --mx-demo-section-gap: 0.75rem;
+  --mx-demo-card-padding: 0.6rem;
+  --mx-demo-page-padding: 1.5rem;
 }
 
-a:hover {
-  text-decoration: underline;
+.mx-demo-font { font-size: calc(1.35rem * var(--mx-font-scale, 1)); line-height: 1.2; }
+.mx-demo-card > .mx-dropdown-wrapper { width: 100%; }
+
+.mx-demo-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
+
+.mx-demo-logo {
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid currentColor;
+}
+
+.mx-demo-brand-name {
+  letter-spacing: 0.02em;
+}
+
+.mx-demo-layout {
+  flex: 1;
+  padding-block: var(--mx-demo-page-padding);
+}
+
+.mx-demo-stack {
+  display: grid;
+  gap: var(--mx-demo-section-gap);
+}
+
+.mx-demo-title {
+  font-size: calc(2rem * var(--mx-font-scale, 1));
+  line-height: 1.2;
+}
+
+.mx-demo-section-title {
+  font-size: calc(1.2rem * var(--mx-font-scale, 1));
+}
+
+.mx-demo-description {
+  line-height: 1.5;
+}
+
+.mx-demo-preview-grid {
+  display: grid;
+  gap: var(--mx-demo-grid-gap);
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+.mx-demo-card {
+  padding: var(--mx-demo-card-padding);
+}
+
+.mx-demo-card-copy {
+  margin-top: 0.5rem;
+  line-height: 1.45;
+}
+
+.mx-demo-spaced {
+  margin-top: 0.75rem;
+}
+
+.mx-demo-theme-select {
+  width: 220px;
+}
+
+.mx-demo-theme-title {
+  font-size: calc(1.2rem * var(--mx-font-scale, 1));
+  line-height: 1.2;
+}
+
+.mx-demo-controls-grid {
+  display: grid;
+  gap: var(--mx-demo-grid-gap);
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.mx-demo-control-title {
+  font-size: calc(1.2rem * var(--mx-font-scale, 1));
+  margin-bottom: 1rem;
+}
+
+.mx-demo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mx-demo-grid-gap);
+}
+
+.mx-demo-label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.mx-demo-select {
+  width: 100%;
+}
+

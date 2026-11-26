@@ -37,9 +37,9 @@ describe("Dropdown", () => {
     render(<Dropdown options={options} value="primary" onChange={() => undefined} aria-label="Theme" />);
 
     const dropdown = screen.getByRole("combobox", { name: "Theme" });
-    fireEvent.focus(dropdown);
+    dropdown.focus();
 
-    expect(dropdown).toHaveStyle("outline: 2px solid var(--mx-button-primary-bg, #1f5ed8)");
-    expect(dropdown).toHaveStyle("box-shadow: 0 0 0 4px rgba(31, 94, 216, 0.28)");
+    expect(dropdown).toHaveStyle("outline: 2px solid var(--mx-color-text, #1d3558)");
+    expect(dropdown).toHaveStyle("outline-offset: 2px");
   });
 });

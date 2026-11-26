@@ -12,5 +12,12 @@ Inherited props:
 - Common examples: src, alt, width, height, loading, decoding, onError, className, style.
 
 Notes:
-- Image renders as an <img> element.
-- Default styles: display block, max-width 100%, and auto height.
+- Image renders as an <img> element while loading and after a successful load.
+- On failure or a missing source, Image renders a circular span containing the
+  uppercased first character of the trimmed alt text.
+- The fallback preserves the full accessible name; decorative fallbacks are hidden.
+- Classes, shared HTML attributes, sx/style, and explicit dimensions are retained.
+  Default fallback dimensions are 1.65rem square; CSS classes can override them.
+- onError still receives the original image error event.
+- Changes to src, srcSet, or sizes retry the image automatically.
+- Default image styles: display block, max-width 100%, and auto height.

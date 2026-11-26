@@ -2,6 +2,10 @@ import { render, screen } from "@testing-library/react";
 import { PageShell } from "./PageShell";
 
 describe("PageShell", () => {
+  it("leaves no reserved gap below a natural footer", () => {
+    render(<PageShell data-testid="shell"><footer>Footer</footer></PageShell>);
+    expect(screen.getByTestId("shell")).toHaveStyle("padding-bottom: 0px");
+  });
   it("renders children", () => {
     render(
       <PageShell>

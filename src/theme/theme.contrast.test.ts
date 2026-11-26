@@ -37,6 +37,15 @@ function contrastRatio(foreground: string, background: string): number {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
+function compositeHover(overlay: string, background: string): string {
+  const values = overlay.match(/[\d.]+/g)?.map(Number);
+  if (!values || values.length !== 4) throw new Error(`Expected an rgba hover color: ${overlay}`);
+  const alpha = values[3];
+  return `#${parseHexColor(background).map((channel, index) =>
+    Math.round(values[index] * alpha + channel * (1 - alpha)).toString(16).padStart(2, "0")
+  ).join("")}`;
+}
+
 const AA_TEXT_CONTRAST = 4.5;
 const allThemes = Object.keys(themeTokens) as ThemeName[];
 const allModes: ThemeMode[] = ["light", "dark"];
@@ -50,6 +59,8 @@ describe("theme contrast compliance", () => {
       it(`${scope} keeps readable text and controls`, () => {
         const readablePairs: Array<[label: string, fg: string, bg: string]> = [
           ["surface text", tokens.text, tokens.surface],
+          ["page text and focus ring", tokens.text, tokens.pageShellBg],
+          ["focus ring on secondary controls", tokens.text, tokens.buttonSecondaryBg],
           ["chrome text", tokens.chromeText, tokens.chromeBg],
           ["primary button", tokens.buttonPrimaryText, tokens.buttonPrimaryBg],
           ["primary button hover", tokens.buttonPrimaryText, tokens.buttonPrimaryBgHover],
@@ -63,7 +74,10 @@ describe("theme contrast compliance", () => {
           ["error hover", tokens.errorText, tokens.errorBgHover],
           ["neutral", tokens.neutralText, tokens.neutralBg],
           ["neutral hover", tokens.neutralText, tokens.neutralBgHover],
-          ["ghost text", tokens.buttonGhostText, tokens.surface]
+          ["ghost text and control accents", tokens.buttonGhostText, tokens.surface],
+          ["ghost text on page", tokens.buttonGhostText, tokens.pageShellBg],
+          ["ghost hover on surface", tokens.buttonGhostText, compositeHover(tokens.buttonGhostBgHover, tokens.surface)],
+          ["ghost hover on page", tokens.buttonGhostText, compositeHover(tokens.buttonGhostBgHover, tokens.pageShellBg)]
         ];
 
         for (const [label, fg, bg] of readablePairs) {

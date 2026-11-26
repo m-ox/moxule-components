@@ -1,0 +1,22 @@
+Section Props
+
+Component: Section
+Source: src/components/Section/Section.tsx
+
+- title (optional): section heading content, rendered with Header.
+- description (optional): introductory content, rendered with Text.
+- headingLevel (optional, default "h2"): h1 through h6; choose for the page hierarchy.
+- headingProps (optional): Header props except children and variant; supports an
+  explicit heading id, classes, colors, and typography overrides.
+- descriptionProps (optional): Text props except children; supports an explicit
+  description id, text variant, classes, and typography overrides.
+- children (optional): any section content after the heading and description.
+- sx/style and class/className apply to the section.
+- ref targets the native section element.
+- Other native section attributes are forwarded, except title is used as heading content.
+
+The component owns its section, heading, description, and accessible associations.
+Explicit aria-label or aria-labelledby can override the automatic section name.
+External aria-describedby references are retained alongside the description.
+Default styles live in the library stylesheet and inherit the active theme and
+font scale. Set --mx-section-gap in CSS to adjust the default 0.75rem spacing.

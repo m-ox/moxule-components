@@ -23,7 +23,7 @@ describe("Card", () => {
     expect(screen.getByTestId("card")).toHaveClass("custom-card");
   });
 
-  it("supports outline appearance", () => {
+  it("keeps the legacy outline appearance transparent and flat", () => {
     render(
       <Card appearance="outline" data-testid="card-outline">
         Outline
@@ -31,8 +31,8 @@ describe("Card", () => {
     );
 
     expect(screen.getByTestId("card-outline")).toHaveStyle("background-color: rgba(0, 0, 0, 0)");
-    expect(screen.getByTestId("card-outline")).toHaveStyle("border-width: 1px");
-    expect(screen.getByTestId("card-outline")).toHaveStyle("border-style: solid");
+    expect(screen.getByTestId("card-outline")).toHaveStyle("border: none");
+    expect(screen.getByTestId("card-outline")).toHaveStyle("box-shadow: none");
   });
 
   it("supports none appearance", () => {

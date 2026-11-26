@@ -1,5 +1,5 @@
 import type { HTMLAttributes, ReactNode } from "react";
-import { spacingScale, type SizeScale } from "../../system/scale";
+import type { SizeScale } from "../../system/scale";
 
 export interface PageShellProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -9,17 +9,9 @@ export interface PageShellProps extends HTMLAttributes<HTMLDivElement> {
   class?: string;
 }
 
-const baseStyle: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  width: "100%",
-  boxSizing: "border-box",
-  backgroundColor: "var(--mx-page-shell-bg, #e8e8e8)"
-};
-
 export function PageShell({
   children,
-  footerOffset = "xl",
+  footerOffset,
   fullHeight = true,
   sx,
   class: classProp,
@@ -27,18 +19,12 @@ export function PageShell({
   style,
   ...props
 }: PageShellProps) {
-  const mergedClassName = ["mx-page-shell", className, classProp].filter(Boolean).join(" ");
-
   return (
     <div
-      className={mergedClassName}
-      style={{
-        ...baseStyle,
-        minHeight: fullHeight ? "100vh" : undefined,
-        paddingBottom: spacingScale[footerOffset],
-        ...sx,
-        ...style
-      }}
+      className={["mx-page-shell", className, classProp].filter(Boolean).join(" ")}
+      data-mx-full-height={fullHeight}
+      data-mx-footer-offset={footerOffset}
+      style={{ ...sx, ...style }}
       {...props}
     >
       {children}

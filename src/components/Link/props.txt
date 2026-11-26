@@ -1,0 +1,21 @@
+Link Props
+
+Component: Link
+Source: src/components/Link/Link.tsx
+
+- children (required): link contents, or one link element when asChild is true.
+- asChild (optional, default false): apply styling and props to a single child
+  such as React Router Link or NavLink, without adding an anchor or wrapper.
+- color (optional): theme name or "inherit". The default uses the current
+  theme's link/ghost text color. Use "inherit" on toolbar/footer backgrounds.
+- Supports native anchor attributes including href, target, rel, and aria-*.
+- sx/style and class/className apply to the anchor.
+- ref targets the native anchor; asChild preserves both the wrapper and child refs.
+
+With asChild, routing props such as to, state, and replace belong on the child.
+The child must forward className, style, events, and ref to its anchor.
+Child props and styles take precedence; class names are combined.
+Child handlers run before wrapper handlers. If the child prevents default,
+the corresponding wrapper handler is skipped.
+NavLink's className, style, and children render callbacks remain supported.
+Default styling and the rounded focus ring live in the library stylesheet.

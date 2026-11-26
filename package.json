@@ -12,21 +12,25 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    }
+    },
+    "./styles.css": "./dist/index.css"
   },
   "files": [
     "dist"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
-    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
-    "demo": "vite",
-    "demo:build": "vite build",
+    "build": "node scripts/generate-theme-css.mjs && tsup src/index.ts --format esm,cjs --dts --clean",
+    "dev": "node scripts/generate-theme-css.mjs && tsup src/index.ts --format esm,cjs --dts --watch",
+    "demo": "node scripts/generate-theme-css.mjs && vite",
+    "demo:build": "node scripts/generate-theme-css.mjs && vite build",
     "demo:preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "styles:generate": "node scripts/generate-theme-css.mjs"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -35,12 +39,13 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
-    "@vitejs/plugin-react": "^4.3.3",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
     "jsdom": "^25.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.7",
     "tsup": "^8.3.5",
     "typescript": "^5.6.3",
     "vite": "^5.4.10",

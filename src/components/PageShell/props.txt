@@ -6,8 +6,8 @@ Source: src/components/PageShell/PageShell.tsx
 Expected props:
 - children (required): ReactNode rendered inside the shell.
 - footerOffset (optional): "xs" | "sm" | "md" | "lg" | "xl".
-  Default: "xl".
-  Reserves bottom space for fixed/static footers.
+  Default: no offset.
+  Set explicitly to reserve bottom space for a fixed/static footer.
 - fullHeight (optional): boolean.
   Default: true.
   When true, shell uses min-height: 100vh.

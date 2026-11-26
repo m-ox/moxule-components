@@ -1,13 +1,13 @@
 import {
   createContext,
-  type CSSProperties,
   type HTMLAttributes,
   type ReactNode,
   useContext,
   useMemo
 } from "react";
+import { toCssVariables } from "./cssVariables";
 import { fontStyleTokens, type FontStyleName } from "../system/fonts";
-import { getThemeTokens, type ThemeMode, type ThemeName, type ThemeTokens } from "./theme";
+import { derivePageShellBackground, getThemeTokens, type ThemeMode, type ThemeName, type ThemeTokens } from "./theme";
 
 interface ThemeContextValue {
   mode: ThemeMode;
@@ -25,45 +25,6 @@ export interface ThemeProviderProps extends HTMLAttributes<HTMLDivElement> {
   customTokens?: Partial<ThemeTokens>;
 }
 
-function toCssVariables(tokens: ThemeTokens): CSSProperties {
-  return {
-    "--mx-color-surface": tokens.surface,
-    "--mx-page-shell-bg": tokens.pageShellBg,
-    "--mx-color-text": tokens.text,
-    "--mx-color-border": tokens.border,
-    "--mx-color-chrome-bg": tokens.chromeBg,
-    "--mx-color-chrome-text": tokens.chromeText,
-    "--mx-font-display": tokens.fontDisplay,
-    "--mx-font-body": tokens.fontBody,
-    "--mx-font-display-letter-spacing": tokens.fontDisplayLetterSpacing,
-    "--mx-button-primary-bg": tokens.buttonPrimaryBg,
-    "--mx-button-primary-bg-hover": tokens.buttonPrimaryBgHover,
-    "--mx-button-primary-text": tokens.buttonPrimaryText,
-    "--mx-button-secondary-bg": tokens.buttonSecondaryBg,
-    "--mx-button-secondary-bg-hover": tokens.buttonSecondaryBgHover,
-    "--mx-button-secondary-text": tokens.buttonSecondaryText,
-    "--mx-button-ghost-text": tokens.buttonGhostText,
-    "--mx-button-ghost-border": tokens.buttonGhostBorder,
-    "--mx-button-ghost-bg-hover": tokens.buttonGhostBgHover,
-    "--mx-status-success-bg": tokens.successBg,
-    "--mx-status-success-bg-hover": tokens.successBgHover,
-    "--mx-status-success-text": tokens.successText,
-    "--mx-status-success-border": tokens.successBorder,
-    "--mx-status-warning-bg": tokens.warningBg,
-    "--mx-status-warning-bg-hover": tokens.warningBgHover,
-    "--mx-status-warning-text": tokens.warningText,
-    "--mx-status-warning-border": tokens.warningBorder,
-    "--mx-status-error-bg": tokens.errorBg,
-    "--mx-status-error-bg-hover": tokens.errorBgHover,
-    "--mx-status-error-text": tokens.errorText,
-    "--mx-status-error-border": tokens.errorBorder,
-    "--mx-status-neutral-bg": tokens.neutralBg,
-    "--mx-status-neutral-bg-hover": tokens.neutralBgHover,
-    "--mx-status-neutral-text": tokens.neutralText,
-    "--mx-status-neutral-border": tokens.neutralBorder
-  } as CSSProperties;
-}
-
 export function ThemeProvider({
   children,
   mode = "light",
@@ -71,17 +32,22 @@ export function ThemeProvider({
   fontStyle = "clear",
   customTokens,
   style,
+  className,
   ...props
 }: ThemeProviderProps) {
+  const derivedPageShellBg = customTokens?.buttonPrimaryBg && customTokens.pageShellBg === undefined
+    ? derivePageShellBackground(customTokens.buttonPrimaryBg, mode)
+    : undefined;
   const tokens = useMemo(() => {
     const baseTokens = getThemeTokens(theme, mode);
     const fontTokens = fontStyleTokens[fontStyle];
     return {
       ...baseTokens,
       ...fontTokens,
+      ...(derivedPageShellBg ? { pageShellBg: derivedPageShellBg } : null),
       ...customTokens
     };
-  }, [theme, mode, fontStyle, customTokens]);
+  }, [theme, mode, fontStyle, customTokens, derivedPageShellBg]);
 
   const value = useMemo(
     () => ({
@@ -95,13 +61,15 @@ export function ThemeProvider({
   return (
     <ThemeContext.Provider value={value}>
       <div
+        className={["mx-theme", className].filter(Boolean).join(" ")}
+        data-mx-font-style={fontStyle}
         data-mx-mode={mode}
         data-mx-theme={theme}
         style={{
-          ...toCssVariables(tokens),
-          color: "var(--mx-color-text)",
-          backgroundColor: "var(--mx-color-surface)",
-          fontFamily: "var(--mx-font-body)",
+          ...(customTokens ? toCssVariables({
+            ...customTokens,
+            ...(derivedPageShellBg ? { pageShellBg: derivedPageShellBg } : null)
+          }) : null),
           ...style
         }}
         {...props}
