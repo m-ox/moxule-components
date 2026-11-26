@@ -2,6 +2,7 @@ import { matchRoutes, Navigate, useLocation, useRoutes, type RouteObject } from 
 import { AppLayout } from "./components/AppLayout";
 import { DashboardPage } from "./pages/Dashboard/DashboardPage";
 import { BlogComponentsPage } from "./pages/BlogComponents/BlogComponentsPage";
+import { PreferencesPage } from "./pages/Preferences/PreferencesPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import type { BreadcrumbItem } from "../index";
 
@@ -17,7 +18,8 @@ const pages = [
     handle: { breadcrumb: "Dashboard" },
     children: [
       { index: true, element: <DashboardPage /> },
-      { path: "blog-components", element: <BlogComponentsPage />, handle: { breadcrumb: "Blog Components" } }
+      { path: "blog-components", element: <BlogComponentsPage />, handle: { breadcrumb: "Blog Components" } },
+      { path: "preferences", element: <PreferencesPage />, handle: { breadcrumb: "Preferences" } }
     ]
   },
   { path: "dashboard", element: <DashboardRedirect /> },

@@ -18,6 +18,7 @@ export function AppMenu() {
           <Link asChild onClick={() => setOpen(false)}><RouterLink to="/#theme-colors">Themes</RouterLink></Link>
           <Link asChild onClick={() => setOpen(false)}><RouterLink to="/#general-components">Components</RouterLink></Link>
           <Link asChild onClick={() => setOpen(false)}><RouterLink to="/blog-components">Blog Components</RouterLink></Link>
+          <Link asChild onClick={() => setOpen(false)}><RouterLink to="/preferences">Preferences</RouterLink></Link>
         </nav>
       </Drawer>
     </>

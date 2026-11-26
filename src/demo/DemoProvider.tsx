@@ -1,8 +1,8 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { ThemeProvider, type FontStyleName, type ThemeMode, type ThemeName } from "../index";
 
-export type DemoSize = "small" | "medium" | "large";
-export type DemoDensity = "comfortable" | "compact";
+import { loadSessionPreferences, saveSessionPreferences, type DemoDensity, type DemoSize } from "./preferences";
+export type { DemoDensity, DemoSize } from "./preferences";
 
 interface DemoPreferences {
   mode: ThemeMode;
@@ -20,11 +20,13 @@ interface DemoPreferences {
 const DemoContext = createContext<DemoPreferences | null>(null);
 
 export function DemoProvider({ children }: { children: ReactNode }) {
-  const [mode, setMode] = useState<ThemeMode>("light");
-  const [theme, setTheme] = useState<ThemeName>("primary");
-  const [fontStyle, setFontStyle] = useState<FontStyleName>("playful");
-  const [size, setSize] = useState<DemoSize>("medium");
-  const [density, setDensity] = useState<DemoDensity>("comfortable");
+  const [initial] = useState(loadSessionPreferences);
+  const [mode, setMode] = useState<ThemeMode>(initial.mode);
+  const [theme, setTheme] = useState<ThemeName>(initial.theme);
+  const [fontStyle, setFontStyle] = useState<FontStyleName>(initial.fontStyle);
+  const [size, setSize] = useState<DemoSize>(initial.size);
+  const [density, setDensity] = useState<DemoDensity>(initial.density);
+  useEffect(() => { saveSessionPreferences({ mode, theme, fontStyle, size, density }); }, [mode, theme, fontStyle, size, density]);
 
   return (
     <DemoContext.Provider value={{ mode, setMode, theme, setTheme, fontStyle, setFontStyle, size, setSize, density, setDensity }}>

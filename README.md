@@ -30,6 +30,11 @@ The full-width Blog features card below General Components opens
 `/blog-components`. This subpage has a Dashboard → Blog Components breadcrumb
 trail and is also linked from the navigation drawer.
 
+The menu also opens `/preferences`: one compact card for font style, theme color,
+text size, and light/dark mode. Appearance choices are validated and stored in
+`sessionStorage`, surviving navigation and reloads for the current tab's session.
+The app continues working when browser storage is unavailable.
+
 `pages/Dashboard/DashboardPage.tsx` composes the font preview, theme preview,
 and General Components sections. Each section and control example lives in
 its own file. Shared theme, mode, font, size, and density preferences live in

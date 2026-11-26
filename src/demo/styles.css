@@ -149,6 +149,11 @@ body,
 .mx-demo-banner-examples { display: grid; gap: var(--mx-demo-grid-gap); }
 .mx-demo-custom-banner { --mx-banner-accent: #5f4a89; }
 
+.mx-demo-preferences-card { display: grid; gap: 1.25rem; padding: 1.5rem; }
+.mx-demo-preferences-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: 1rem; }
+.mx-demo-preferences-fields .mx-dropdown-wrapper { width: 100%; }
+.mx-demo-preferences-fields .mx-dropdown { width: 100%; }
+
 .mx-demo-blog-cta {
   display: flex;
   align-items: center;

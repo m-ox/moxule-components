@@ -1,9 +1,11 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { Link as RouterLink, MemoryRouter, useLocation } from "react-router-dom";
 import { App } from "./App";
+import { preferencesStorageKey } from "./preferences";
 import { blogMarkdownStorageKey } from "./pages/BlogComponents/sections/MarkdownEditorExample";
 
 beforeEach(() => {
+  sessionStorage.removeItem(preferencesStorageKey);
   localStorage.removeItem(blogMarkdownStorageKey);
 });
 
@@ -262,4 +264,31 @@ it("shows the Markdown editor on Blog Components and reloads a saved post", asyn
   expect(screen.getByRole("textbox", { name: "Post content" })).toHaveValue(markdown);
   fireEvent.click(screen.getByRole("button", { name: "Preview" }));
   expect(within(screen.getByRole("region", { name: "Markdown preview" })).getByRole("heading", { name: "My saved post" })).toBeInTheDocument();
+});
+
+it("opens simple Preferences from the menu and keeps choices for the browser session", () => {
+  const first = renderApp();
+  fireEvent.click(screen.getByRole("button", { name: "Open menu" }));
+  fireEvent.click(within(screen.getByRole("dialog", { name: "Menu" })).getByRole("link", { name: "Preferences" }));
+  expect(screen.getByTestId("location").textContent).toBe("/preferences");
+  expect(screen.getByRole("heading", { level: 1, name: "Preferences" })).toBeInTheDocument();
+  expect(screen.queryByRole("heading", { name: "Theme Color Preview" })).not.toBeInTheDocument();
+  const settings = within(screen.getByRole("article", { name: "Appearance preferences" }));
+  fireEvent.change(settings.getByRole("combobox", { name: "Font style" }), { target: { value: "clear" } });
+  fireEvent.change(settings.getByRole("combobox", { name: "Theme color" }), { target: { value: "pink" } });
+  fireEvent.change(settings.getByRole("combobox", { name: "Text size" }), { target: { value: "large" } });
+  fireEvent.click(settings.getByRole("switch", { name: "Dark mode" }));
+  const stored = JSON.parse(sessionStorage.getItem(preferencesStorageKey)!);
+  expect(stored).toMatchObject({ theme: "pink", fontStyle: "clear", size: "large", mode: "dark" });
+  first.unmount();
+  const second = renderApp(["/preferences"]);
+  expect(screen.getByRole("combobox", { name: "Font style" })).toHaveValue("clear");
+  expect(screen.getByRole("combobox", { name: "Theme color" })).toHaveValue("pink");
+  expect(screen.getByRole("combobox", { name: "Text size" })).toHaveValue("large");
+  expect(screen.getByRole("switch", { name: "Dark mode" })).toHaveAttribute("aria-checked", "true");
+  expect(second.container.querySelector(".mx-demo")).toHaveAttribute("data-mx-mode", "dark");
+  const breadcrumbs = within(screen.getByRole("navigation", { name: "Breadcrumb" }));
+  expect(breadcrumbs.getByText("Preferences")).toHaveAttribute("aria-current", "page");
+  fireEvent.click(breadcrumbs.getByRole("link", { name: "Dashboard" }));
+  expect(screen.getByRole("combobox", { name: "Theme selector" })).toHaveValue("pink");
 });
