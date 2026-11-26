@@ -1,6 +1,7 @@
+import { appSitemap } from "../navigation";
 import { useEffect, useId, useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-import { Drawer, Link, MenuButton } from "../../index";
+import { Drawer, MenuButton, Sitemap } from "../../index";
 
 export function AppMenu() {
   const [open, setOpen] = useState(false);
@@ -12,14 +13,8 @@ export function AppMenu() {
     <>
       <MenuButton open={open} onClick={() => setOpen((value) => !value)} aria-controls={drawerId} />
       <Drawer id={drawerId} title="Menu" description="Explore the dashboard." open={open} onOpenChange={setOpen} side="left">
-        <nav aria-label="Main navigation" className="mx-demo-drawer-links">
-          <Link asChild onClick={() => setOpen(false)}><RouterLink to="/">Dashboard</RouterLink></Link>
-          <Link asChild onClick={() => setOpen(false)}><RouterLink to="/fonts">Fonts</RouterLink></Link>
-          <Link asChild onClick={() => setOpen(false)}><RouterLink to="/themes">Themes</RouterLink></Link>
-          <Link asChild onClick={() => setOpen(false)}><RouterLink to="/components">Components</RouterLink></Link>
-          <Link asChild onClick={() => setOpen(false)}><RouterLink to="/writing-components">Writing Components</RouterLink></Link>
-          <Link asChild onClick={() => setOpen(false)}><RouterLink to="/preferences">Preferences</RouterLink></Link>
-        </nav>
+        <Sitemap aria-label="Main navigation" items={appSitemap} currentPath={pathname}
+          renderLink={(item) => <RouterLink to={item.href} onClick={() => setOpen(false)}>{item.label}</RouterLink>} />
       </Drawer>
     </>
   );

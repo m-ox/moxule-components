@@ -1,3 +1,4 @@
+import { appSubpages } from "./navigation";
 import { ComponentsPage } from "./pages/Components/ComponentsPage";
 import { ThemesPage } from "./pages/Themes/ThemesPage";
 import { FontsPage } from "./pages/Fonts/FontsPage";
@@ -26,11 +27,11 @@ const pages = [
     handle: { breadcrumb: "Dashboard" },
     children: [
       { index: true, element: <DashboardPage /> },
-      { path: "fonts", element: <FontsPage />, handle: { breadcrumb: "Fonts" } },
-      { path: "themes", element: <ThemesPage />, handle: { breadcrumb: "Themes" } },
-      { path: "components", element: <ComponentsPage />, handle: { breadcrumb: "Components" } },
-      { path: "writing-components", element: <WritingComponentsPage />, handle: { breadcrumb: "Writing Components" } },
-      { path: "preferences", element: <PreferencesPage />, handle: { breadcrumb: "Preferences" } }
+      ...appSubpages.map((page) => ({
+        path: page.href.slice(1),
+        element: ({ "/fonts": <FontsPage />, "/themes": <ThemesPage />, "/components": <ComponentsPage />, "/writing-components": <WritingComponentsPage />, "/preferences": <PreferencesPage /> })[page.href],
+        handle: { breadcrumb: page.label }
+      }))
     ]
   },
   { path: "dashboard", element: <DashboardRedirect /> },

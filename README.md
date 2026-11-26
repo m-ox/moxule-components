@@ -561,6 +561,13 @@ lets you trigger each status, the current theme color, and custom-color examples
 
 ## Breadcrumbs
 
+`Sitemap` provides a clickable overview using the same outlined/filled nodes
+and thin, rounded connections. Pass `items` as `{ label, href, children? }`
+objects, `currentPath` to highlight the current page, and optional `renderLink`
+for router links. Every node remains clickable. The demo shares its canonical
+page list between router and sitemap, shows the tree in the menu drawer, and
+includes an App paths example on `/`.
+
 `Breadcrumbs` renders an accessible ordered navigation trail using themed
 `Link` components. Pass `items` from root to current page. The last item is
 plain text with `aria-current="page"`. Parent pages have outlined circles and the

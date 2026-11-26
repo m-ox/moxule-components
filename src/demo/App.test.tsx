@@ -58,7 +58,7 @@ it("shows an independent toggle example and a reusable navbar theme toggle", () 
 it("places working general controls below the theme previews and preserves selections on theme changes", () => {
   const { container } = renderApp();
   expect(container.querySelectorAll("[style]")).toHaveLength(0);
-  expect(container.querySelectorAll("section")).toHaveLength(5);
+  expect(container.querySelectorAll("section")).toHaveLength(6);
   for (const section of container.querySelectorAll("section")) expect(section).toHaveClass("mx-section");
   expect(container.querySelector(".mx-page-shell")).toHaveStyle("padding-bottom: 0px");
   const footerLinks = within(screen.getByRole("contentinfo")).getAllByRole("link");

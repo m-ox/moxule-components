@@ -469,6 +469,17 @@
   stroke-linecap: round; stroke-linejoin: round;
 }
 
+.mx-sitemap { color: var(--mx-color-text, #1d3558); font-family: var(--mx-font-body, sans-serif); font-size: calc(0.95rem * var(--mx-font-scale, 1)); line-height: 1.5; }
+.mx-sitemap-list { list-style: none; margin: 0; padding: 0; }
+.mx-sitemap-item { position: relative; }
+.mx-sitemap-item + .mx-sitemap-item { margin-top: 0.75em; }
+.mx-sitemap-list .mx-sitemap-list { position: relative; margin: 0.75em 0 0 0.325em; padding-left: 1.5em; }
+.mx-sitemap-list .mx-sitemap-list::before { content: ""; position: absolute; left: 0; top: -0.75em; bottom: 0.75em; width: 1px; background: var(--mx-button-ghost-text, #3f618f); }
+.mx-sitemap-list .mx-sitemap-list > .mx-sitemap-item::before { content: ""; position: absolute; left: -1.5em; top: 0; width: 1.65em; height: 0.75em; border-left: 1px solid var(--mx-button-ghost-text, #3f618f); border-bottom: 1px solid var(--mx-button-ghost-text, #3f618f); border-bottom-left-radius: 6px; pointer-events: none; }
+.mx-sitemap .mx-breadcrumbs-step { text-decoration: none; }
+.mx-sitemap .mx-breadcrumbs-step:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.mx-sitemap[hidden] { display: none; }
+
 .mx-banner {
   position: relative;
   display: flex;

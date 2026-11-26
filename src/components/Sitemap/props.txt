@@ -1,0 +1,12 @@
+Sitemap
+
+items: readonly { label, href, children? }[] describing a navigation hierarchy.
+currentPath: exact current path; query strings, hashes, and trailing slashes are ignored.
+renderLink: optional custom link renderer for React Router or other routing libraries.
+Native nav attributes/ref, sx/style and class/className are supported.
+aria-label defaults to Sitemap unless aria-labelledby is supplied.
+
+All nodes remain clickable, including the current page, which receives
+aria-current=page and a filled circle. Other nodes use outlined circles.
+Nested lists use thin rounded branches in the theme accent. Native links retain
+keyboard focus and accessible names. Empty item arrays render nothing.

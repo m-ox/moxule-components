@@ -3,6 +3,7 @@ import { FontStylePreview } from "./sections/FontStylePreview";
 import { ThemeColorPreview } from "./sections/ThemeColorPreview";
 import { GeneralComponents } from "./sections/GeneralComponents";
 import { WritingFeatures } from "./sections/WritingFeatures";
+import { AppSitemap } from "./sections/AppSitemap";
 
 export function DashboardPage() {
   return (
@@ -17,6 +18,7 @@ export function DashboardPage() {
       <ThemeColorPreview />
       <GeneralComponents />
       <WritingFeatures />
+      <AppSitemap />
     </Section>
   );
 }

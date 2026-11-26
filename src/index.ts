@@ -1,5 +1,7 @@
 import "./styles.css";
 
+export { Sitemap } from "./components/Sitemap/Sitemap";
+export type { SitemapProps, SitemapItem } from "./components/Sitemap/Sitemap";
 export { TextInput } from "./components/TextInput/TextInput";
 export type { TextInputProps } from "./components/TextInput/TextInput";
 export { Tooltip } from "./components/Tooltip/Tooltip";
