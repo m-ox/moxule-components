@@ -64,7 +64,7 @@ body,
 
 .mx-demo-layout {
   flex: 1;
-  padding-block: var(--mx-demo-page-padding);
+  padding-block: var(--mx-demo-grid-gap) var(--mx-demo-page-padding);
 }
 
 .mx-demo-stack {
