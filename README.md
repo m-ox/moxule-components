@@ -385,6 +385,10 @@ export function Preferences() {
 
 ## Accessible controls
 
+Buttons gain a subtle themed tint while pressed and fade back gently on release.
+This uses native pressed states, supports pointer and keyboard interaction,
+leaves disabled buttons unchanged, and respects reduced-motion preferences.
+
 The demo's General Components section follows Theme Color Preview and includes interactive examples of `Button`, `Dropdown`, `RadioGroup`, `Checkbox`, and `Toggle`. The Comfortable and Compact radio options change preview spacing and card padding. Controls inherit theme colors and fonts, with visible focus outlines and native keyboard behavior. `ThemeProvider` sets the browser color scheme for native controls. The select uses an inset SVG caret with `currentColor` so it can follow forced colors, and radio and checkbox inputs retain their native appearances.
 
 Provide a meaningful button name and a visible `<label htmlFor="...">` for each `Dropdown`. `RadioGroup` supplies a shared `name`, a `<fieldset>`, and a `<legend>`, following W3C guidance for [labels](https://www.w3.org/WAI/tutorials/forms/labels/) and [grouping controls](https://www.w3.org/WAI/tutorials/forms/grouping/). Do not put links or other interactive elements inside radio or checkbox labels.

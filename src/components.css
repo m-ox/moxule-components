@@ -1,4 +1,6 @@
 .mx-button {
+  position: relative;
+  isolation: isolate;
   border: 1px solid transparent;
   border-radius: 10px;
   cursor: pointer;
@@ -9,6 +11,19 @@
   font-family: var(--mx-font-body, sans-serif);
   transition: background-color 120ms ease, border-color 120ms ease;
 }
+
+.mx-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--mx-color-text, #1d3558);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease-out;
+}
+.mx-button:active:not(:disabled)::after { opacity: 0.1; transition-duration: 60ms; }
 
 .mx-button[data-mx-variant="primary"] {
   background-color: var(--mx-button-primary-bg, #0f172a);
@@ -783,6 +798,6 @@
   .mx-tooltip-content { animation: none; }
   .mx-drawer, .mx-drawer::backdrop, .mx-modal, .mx-modal::backdrop { animation: none !important; }
   .mx-banner[data-mx-dismissing="true"], .mx-nudge { animation: none; }
-  .mx-button, .mx-dropdown, .mx-radio-control::before, .mx-checkbox-control::before,
+  .mx-button, .mx-button::after, .mx-dropdown, .mx-radio-control::before, .mx-checkbox-control::before,
   .mx-toggle-track, .mx-toggle-thumb, .mx-markdown-editor-input, .mx-text-input { transition: none; }
 }
