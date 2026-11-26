@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { Link as RouterLink, MemoryRouter, useLocation } from "react-router-dom";
 import { App } from "./App";
 
@@ -112,6 +112,29 @@ it("renders Dashboard as home and supplies breadcrumbs above the page", () => {
   expect(header.queryByRole("link", { name: "Dashboard" })).not.toBeInTheDocument();
 });
 
+it("places the menu beside the navbar theme toggle and navigates with the left drawer", () => {
+  vi.useFakeTimers();
+  try {
+    renderApp();
+    const navbar = within(screen.getByRole("banner"));
+    const trigger = navbar.getByRole("button", { name: "Open menu" });
+    expect(trigger.parentElement).toBe(navbar.getByRole("switch", { name: "Toggle dark mode" }).parentElement);
+    trigger.focus();
+    fireEvent.click(trigger);
+    const drawer = screen.getByRole("dialog", { name: "Menu" });
+    expect(drawer).toHaveAttribute("data-mx-side", "left");
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(trigger).toHaveAttribute("aria-controls", drawer.id);
+    fireEvent.click(within(drawer).getByRole("link", { name: "Components" }));
+    act(() => vi.advanceTimersByTime(240));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(screen.getByTestId("location").textContent).toBe("/#general-components");
+    expect(trigger).toHaveFocus();
+  } finally {
+    vi.useRealTimers();
+  }
+});
+
 it("places the notification clicker after Toggle and sends colored nudges to a corner", () => {
   renderApp();
   const toggle = screen.getByRole("article", { name: "Toggle" });
@@ -129,6 +152,26 @@ it("places the notification clicker after Toggle and sends colored nudges to a c
   expect(viewport.closest(".mx-theme")).toHaveAttribute("data-mx-mode", "dark");
   fireEvent.click(screen.getByRole("link", { name: "Missing page" }));
   expect(within(viewport).getByText("A little purple nudge.")).toBeInTheDocument();
+});
+
+it("places the Modal card after Drawer and opens a working confirmation", () => {
+  vi.useFakeTimers();
+  try {
+    renderApp();
+    const drawer = screen.getByRole("article", { name: "Drawer" });
+    const card = screen.getByRole("article", { name: "Modal" });
+    expect(drawer.nextElementSibling).toBe(card);
+    const trigger = within(card).getByRole("button", { name: "Open modal" });
+    trigger.focus();
+    fireEvent.click(trigger);
+    const modal = screen.getByRole("dialog", { name: "A little moment" });
+    fireEvent.click(within(modal).getByRole("button", { name: "Continue" }));
+    act(() => vi.advanceTimersByTime(240));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+  } finally {
+    vi.useRealTimers();
+  }
 });
 
 it("updates route breadcrumbs and preserves shared preferences when leaving Dashboard", () => {

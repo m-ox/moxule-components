@@ -58,6 +58,8 @@ body,
 .mx-demo-brand { text-decoration: none; }
 .mx-demo section[id] { scroll-margin-top: 5rem; }
 .mx-demo-breadcrumbs { margin-bottom: 1rem; }
+.mx-demo-navbar-actions { display: flex; align-items: center; gap: 0.75rem; }
+.mx-demo-drawer-links { display: grid; gap: 1rem; }
 
 .mx-demo-layout {
   flex: 1;

@@ -2,6 +2,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { Image, Link, ThemeToggle, Toolbar } from "../../index";
 import { useDemoPreferences } from "../DemoProvider";
 import logoUrl from "../favicon.ico";
+import { AppMenu } from "./AppMenu";
 
 export function AppNavbar() {
   const { setMode } = useDemoPreferences();
@@ -15,7 +16,7 @@ export function AppNavbar() {
           </RouterLink>
         </Link>
       }
-      right={<ThemeToggle onModeChange={setMode} />}
+      right={<div className="mx-demo-navbar-actions"><ThemeToggle onModeChange={setMode} /><AppMenu /></div>}
     />
   );
 }

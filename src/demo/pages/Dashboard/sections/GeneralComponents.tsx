@@ -5,6 +5,8 @@ import { RadioExample } from "../examples/RadioExample";
 import { CheckboxExample } from "../examples/CheckboxExample";
 import { ToggleExample } from "../examples/ToggleExample";
 import { NudgeExample } from "../examples/NudgeExample";
+import { DrawerExample } from "../examples/DrawerExample";
+import { ModalExample } from "../examples/ModalExample";
 import { BannerExamples } from "../examples/BannerExamples";
 
 export function GeneralComponents() {
@@ -24,6 +26,8 @@ export function GeneralComponents() {
         <CheckboxExample />
         <ToggleExample />
         <NudgeExample />
+        <DrawerExample />
+        <ModalExample />
       </div>
       <BannerExamples />
     </Section>

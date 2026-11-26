@@ -15,11 +15,7 @@ export function AppLayout({ breadcrumbs }: { breadcrumbs: readonly BreadcrumbIte
       <AppNavbar />
       <Layout margin="lg" contentWidth="md" className="mx-demo-layout">
         <main id="main-content">
-          <Breadcrumbs
-            items={breadcrumbs}
-            className="mx-demo-breadcrumbs"
-            renderLink={(item) => <RouterLink to={item.href!}>{item.label}</RouterLink>}
-          />
+          <Breadcrumbs items={breadcrumbs} className="mx-demo-breadcrumbs" renderLink={(item) => <RouterLink to={item.href!}>{item.label}</RouterLink>} />
           <Outlet />
         </main>
       </Layout>
