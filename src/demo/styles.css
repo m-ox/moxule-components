@@ -149,3 +149,18 @@ body,
 .mx-demo-banner-examples { display: grid; gap: var(--mx-demo-grid-gap); }
 .mx-demo-custom-banner { --mx-banner-accent: #5f4a89; }
 
+.mx-demo-blog-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+.mx-demo-blog-cta-copy {
+  flex: 1 1 24rem;
+  min-width: 0;
+  font-size: calc(1.2rem * var(--mx-font-scale, 1));
+  line-height: 1.5;
+}
+

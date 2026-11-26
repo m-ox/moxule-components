@@ -1,6 +1,7 @@
 import { matchRoutes, Navigate, useLocation, useRoutes, type RouteObject } from "react-router-dom";
 import { AppLayout } from "./components/AppLayout";
 import { DashboardPage } from "./pages/Dashboard/DashboardPage";
+import { BlogComponentsPage } from "./pages/BlogComponents/BlogComponentsPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import type { BreadcrumbItem } from "../index";
 
@@ -11,7 +12,14 @@ function DashboardRedirect() {
 
 // Breadcrumb labels belong to routes, alongside their page components.
 const pages = [
-  { index: true, element: <DashboardPage />, handle: { breadcrumb: "Dashboard" } },
+  {
+    path: "/",
+    handle: { breadcrumb: "Dashboard" },
+    children: [
+      { index: true, element: <DashboardPage /> },
+      { path: "blog-components", element: <BlogComponentsPage />, handle: { breadcrumb: "Blog Components" } }
+    ]
+  },
   { path: "dashboard", element: <DashboardRedirect /> },
   { path: "*", element: <NotFoundPage />, handle: { breadcrumb: "Page not found" } }
 ] satisfies RouteObject[];

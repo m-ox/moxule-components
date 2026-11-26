@@ -2,6 +2,7 @@ import { Section } from "../../../index";
 import { FontStylePreview } from "./sections/FontStylePreview";
 import { ThemeColorPreview } from "./sections/ThemeColorPreview";
 import { GeneralComponents } from "./sections/GeneralComponents";
+import { BlogFeatures } from "./sections/BlogFeatures";
 
 export function DashboardPage() {
   return (
@@ -15,6 +16,7 @@ export function DashboardPage() {
       <FontStylePreview />
       <ThemeColorPreview />
       <GeneralComponents />
+      <BlogFeatures />
     </Section>
   );
 }

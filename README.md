@@ -26,6 +26,10 @@ Add new page routes and their breadcrumb labels in `NavRouter`.
 The trail follows matched route ancestry: Dashboard shows a single current-page
 marker, and nested pages add their actual parent steps.
 
+The full-width Blog features card below General Components opens
+`/blog-components`. This subpage has a Dashboard → Blog Components breadcrumb
+trail and is also linked from the navigation drawer.
+
 `pages/Dashboard/DashboardPage.tsx` composes the font preview, theme preview,
 and General Components sections. Each section and control example lives in
 its own file. Shared theme, mode, font, size, and density preferences live in

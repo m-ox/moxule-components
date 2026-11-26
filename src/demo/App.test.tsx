@@ -44,7 +44,7 @@ it("shows an independent toggle example and a reusable navbar theme toggle", () 
 it("places working general controls below the theme previews and preserves selections on theme changes", () => {
   const { container } = renderApp();
   expect(container.querySelectorAll("[style]")).toHaveLength(0);
-  expect(container.querySelectorAll("section")).toHaveLength(4);
+  expect(container.querySelectorAll("section")).toHaveLength(5);
   for (const section of container.querySelectorAll("section")) expect(section).toHaveClass("mx-section");
   expect(container.querySelector(".mx-page-shell")).toHaveStyle("padding-bottom: 0px");
   const footerLinks = within(screen.getByRole("contentinfo")).getAllByRole("link");
@@ -210,4 +210,36 @@ it("redirects old dashboard URLs home while preserving search and section anchor
   expect(screen.getByRole("heading", { level: 1, name: "Dashboard" })).toBeInTheDocument();
   expect(screen.getByTestId("location").textContent).toBe("/?view=all#theme-colors");
   expect(within(screen.getByRole("banner")).getByRole("link")).toHaveAttribute("href", "/");
+});
+
+it("links the full-width blog feature card to its subpage and shows the breadcrumb hierarchy", () => {
+  const { container } = renderApp();
+  const section = screen.getByRole("region", { name: "Blog features" });
+  expect(within(section).getAllByRole("article")).toHaveLength(1);
+  expect(within(section).getByRole("heading", { name: "Want to see blog features? Check out the blog components!" })).toBeInTheDocument();
+  const general = screen.getByRole("region", { name: "General Components" });
+  expect(general.nextElementSibling).toBe(section);
+  fireEvent.change(screen.getByRole("combobox", { name: "Theme selector" }), { target: { value: "pink" } });
+  fireEvent.click(screen.getByRole("switch", { name: "Toggle dark mode" }));
+  fireEvent.click(within(section).getByRole("button", { name: "View blog components" }));
+  expect(screen.getByTestId("location").textContent).toBe("/blog-components");
+  expect(screen.getByRole("heading", { level: 1, name: "Blog Components" })).toBeInTheDocument();
+  expect(screen.queryByRole("region", { name: "General Components" })).not.toBeInTheDocument();
+  expect(container.querySelector(".mx-demo")).toHaveAttribute("data-mx-theme", "pink");
+  expect(container.querySelector(".mx-demo")).toHaveAttribute("data-mx-mode", "dark");
+  const breadcrumbs = within(screen.getByRole("navigation", { name: "Breadcrumb" }));
+  const steps = breadcrumbs.getAllByRole("listitem");
+  expect(steps).toHaveLength(2);
+  expect(within(steps[0]).getByRole("link", { name: "Dashboard" })).toHaveAttribute("href", "/");
+  expect(within(steps[1]).getByText("Blog Components")).toHaveAttribute("aria-current", "page");
+});
+
+it("opens Blog Components directly and returns home through its parent breadcrumb", () => {
+  renderApp(["/blog-components"]);
+  expect(screen.getByRole("heading", { level: 1, name: "Blog Components" })).toBeInTheDocument();
+  const breadcrumbs = within(screen.getByRole("navigation", { name: "Breadcrumb" }));
+  fireEvent.click(breadcrumbs.getByRole("link", { name: "Dashboard" }));
+  expect(screen.getByTestId("location").textContent).toBe("/");
+  expect(screen.getByRole("heading", { level: 1, name: "Dashboard" })).toBeInTheDocument();
+  expect(within(screen.getByRole("navigation", { name: "Breadcrumb" })).getAllByRole("listitem")).toHaveLength(1);
 });
