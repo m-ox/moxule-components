@@ -374,6 +374,72 @@ Tests cover accessible names, descriptions, focus, disabled behavior, selection,
 
 Buttons use their theme's primary, secondary, or ghost hover colors, including explicit per-button theme colors. Dropdowns gain a soft themed fill on hover, and radio and checkbox hit areas gain a matching tint. Disabled controls keep their resting appearance, focus rings remain visible, and the transitions respect reduced-motion preferences.
 
+## Modal
+
+`Modal` is a centered, controlled dialog with the same keyboard, focus, scroll
+locking, and dismissal behavior as Drawer. It has a flat themed surface and a
+delicate 240ms fade with a small vertical movement, respecting reduced motion.
+
+```tsx
+<Modal
+  title="Confirm changes"
+  description="Review before continuing."
+  open={open}
+  onOpenChange={setOpen}
+  size="md"
+  footer={<Button onClick={() => setOpen(false)}>Continue</Button>}
+>
+  <Text>Your changes are ready.</Text>
+</Modal>
+```
+
+Sizes are `sm` (24rem), `md` (32rem), and `lg` (44rem), constrained to the viewport.
+`footer` accepts action content. `closeOnEscape`, `closeOnBackdrop`, `closeLabel`,
+`initialFocusRef`, `onDismiss`, native dialog props, and style overrides are supported.
+Keep the component mounted while setting `open={false}` so its exit can finish.
+
+Cards and Modal use tighter top-left/bottom-right corners and softer opposite
+corners. Customize the default `4px 18px 4px 18px` with `--mx-panel-radius`.
+The Modal example card follows Drawer in General Components.
+
+## Drawer and MenuButton
+
+`Drawer` is a controlled modal panel with `side="left"` or `side="right"`
+(default right). It uses the native dialog top layer to contain focus and make
+the background inactive. It inherits theme colors and fonts, with a flat,
+borderless surface and a soft 240ms slide/fade.
+
+```tsx
+import { useId, useState } from "react";
+import { Drawer, MenuButton } from "moxule-components";
+
+function Navigation() {
+  const [open, setOpen] = useState(false);
+  const id = useId();
+  return <>
+    <MenuButton open={open} aria-controls={id} onClick={() => setOpen(true)} />
+    <Drawer id={id} title="Menu" side="left" open={open} onOpenChange={setOpen}>
+      Navigation content
+    </Drawer>
+  </>;
+}
+```
+
+`title` supplies the accessible name; optional `description` is automatically
+associated. The close button, Escape, and backdrop request closing through
+`onOpenChange(false)`. Set `closeOnEscape` or `closeOnBackdrop` to false to disable
+those interactions. Use `initialFocusRef` for an alternate initial focus target
+and `closeLabel` to name the close button. `onDismiss` runs after closing finishes.
+
+Keep the Drawer mounted while changing `open`. It locks page scrolling until
+the exit finishes, restores focus to the opener, cancels pending exits when
+reopened, and cleans up on unmount. Reduced motion skips the animation.
+Set `--mx-drawer-width` in CSS to customize the default 22rem width.
+
+The demo's menu button sits in the navbar beside the light/dark toggle. Its
+left drawer links to Dashboard and its sections. The Drawer card in General
+Components lets you try either side.
+
 ## Nudges and notifications
 
 Wrap the app with `NudgeProvider` inside `ThemeProvider`, then call `useNudges()`

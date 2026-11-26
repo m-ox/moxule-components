@@ -1,5 +1,11 @@
 import "./styles.css";
 
+export { Modal } from "./components/Modal/Modal";
+export type { ModalProps, ModalSize } from "./components/Modal/Modal";
+export { Drawer } from "./components/Drawer/Drawer";
+export type { DrawerProps, DrawerSide } from "./components/Drawer/Drawer";
+export { MenuButton } from "./components/MenuButton/MenuButton";
+export type { MenuButtonProps } from "./components/MenuButton/MenuButton";
 export { Nudge } from "./components/Nudge/Nudge";
 export type { NudgeProps } from "./components/Nudge/Nudge";
 export { NudgeProvider, useNudges } from "./components/Nudge/NudgeProvider";

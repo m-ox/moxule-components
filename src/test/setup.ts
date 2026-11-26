@@ -8,6 +8,18 @@ const style = document.createElement("style");
 style.textContent = [source, themes, demo.replace(/^@import[^\n]*$/gm, "")].join("\n");
 document.head.append(style);
 
+// jsdom lacks native dialog methods. Simulate their open/close lifecycle;
+// browsers provide top-layer rendering, background inertness, and focus containment.
+if (!HTMLDialogElement.prototype.showModal) {
+  HTMLDialogElement.prototype.showModal = function () { this.setAttribute("open", ""); };
+  HTMLDialogElement.prototype.close = function (returnValue = "") {
+    if (!this.open) return;
+    this.removeAttribute("open");
+    this.returnValue = returnValue;
+    this.dispatchEvent(new Event("close"));
+  };
+}
+
 // jsdom does not invalidate its computed-style cache when focus changes.
 // Refresh it so assertions evaluate :focus and :focus-within rules accurately.
 for (const event of ["focusin", "focusout"]) {

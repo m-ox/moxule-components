@@ -20,3 +20,5 @@ Inherited props:
 Notes:
 - Card renders as an <article> element.
 - Uses theme surface and text tokens by default. All appearances are borderless and shadowless.
+- Opposite corners alternate between tighter and softer rounding: 4px 18px 4px 18px.
+  Customize --mx-panel-radius in CSS to override.

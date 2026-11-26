@@ -1,0 +1,26 @@
+Drawer Props
+
+- open (required): controlled visibility.
+- onOpenChange (required): receives false when the close button, Escape, or backdrop requests closing.
+- title (required): visible heading and default accessible dialog name.
+- children (required): navigation, forms, or other panel content.
+- side: left | right (default right).
+- description: optional hint automatically connected with aria-describedby.
+- footer: optional action area below the content.
+- closeLabel: accessible close button label (default Close drawer).
+- closeOnBackdrop / closeOnEscape: default true.
+- initialFocusRef: optional element to focus when opening; defaults to the close button.
+- onDismiss: called after the exit animation finishes.
+- Native dialog attributes and events, sx/style, class/className are supported.
+- aria-label/aria-labelledby can override the generated accessible name.
+
+Uses a native modal dialog for top-layer placement, background inertness, and
+focus containment. Focus returns to the opening control after dismissal.
+Page scrolling is locked while open and during the exit. Closing slides/fades
+gently over 240ms; reduced motion closes immediately. Pending timers and scroll
+locks are cleaned up on unmount. Reopening cancels a pending exit.
+
+Flat, borderless, shadow-free styling inherits the surrounding theme and fonts.
+Default width is 22rem, constrained to the viewport. Set --mx-drawer-width in CSS
+to customize. Long panel content scrolls and safe-area insets are respected.
+Keep the Drawer mounted while changing open so its exit can finish.

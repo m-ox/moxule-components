@@ -1,0 +1,25 @@
+Modal Props
+
+- open (required): controlled visibility; keep mounted during exit.
+- onOpenChange (required): receives false when closing is requested.
+- title (required): visible heading and default accessible dialog name.
+- children (required): panel content.
+- description: optional hint automatically connected with aria-describedby.
+- footer: optional action area below the content.
+- size: sm (24rem), md (default, 32rem), lg (44rem), constrained to the viewport.
+- closeLabel: accessible close button label (default Close modal).
+- closeOnBackdrop / closeOnEscape: default true.
+- initialFocusRef: alternate initial focus target; defaults to the close button.
+- onDismiss: called after the exit animation finishes.
+- Native dialog attributes/events, sx/style, and class/className are supported.
+- aria-label/aria-labelledby can override the generated accessible name.
+
+Uses the same native dialog behavior as Drawer: modal top-layer rendering,
+background inertness, focus containment/restoration, scroll locking, and cleanup.
+Multiple dialogs share the scroll lock until the last open dialog closes.
+Opening/closing uses a delicate fade and 6px movement over 240ms. Reduced motion
+skips the animation. Reopening cancels a pending exit.
+
+The panel is centered, themed, borderless, and shadow-free. Top-left/bottom-right
+corners are tighter (4px); top-right/bottom-left are softer (18px), matching Card.
+Customize --mx-panel-radius or --mx-modal-width in CSS. Long content scrolls.

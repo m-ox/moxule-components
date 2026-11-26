@@ -1,0 +1,11 @@
+MenuButton Props
+
+- open: expanded state (default false).
+- onClick: supplied by the parent to toggle its controlled Drawer.
+- aria-controls: ID of the associated Drawer.
+- aria-label: defaults to Open menu / Close menu according to open.
+- Supports Button props except children; the icon is supplied by MenuButton.
+
+Renders a borderless button with a rounded hamburger/close icon, aria-expanded,
+and aria-haspopup=dialog. The icon is decorative. Colors inherit from the
+surrounding toolbar or page, with themed hover and visible keyboard focus.
