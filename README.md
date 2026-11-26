@@ -14,6 +14,9 @@ Component library for m-ox to use.
 
 ## Demo routing and pages
 
+Press Ctrl+K (Windows/Linux) or Command+K (Mac) to toggle the app menu.
+The shortcut leaves text fields and other modal dialogs alone; Escape closes the drawer.
+
 `/` is the bulk showcase. The menu opens focused `/fonts` (one typography
 specimen), `/themes` (one palette preview), and `/components` (interactive controls)
 pages. Writing uses one title-and-editor workspace, while Preferences stays a

@@ -133,8 +133,8 @@ it("places the menu beside the navbar theme toggle and navigates with the left d
     renderApp();
     const navbar = within(screen.getByRole("banner"));
     const trigger = navbar.getByRole("button", { name: "Open menu" });
-    expect(trigger.parentElement).toBe(navbar.getByRole("switch", { name: "Toggle dark mode" }).parentElement);
-    trigger.focus();
+    expect(trigger.closest(".mx-demo-navbar-actions")).toBe(navbar.getByRole("switch", { name: "Toggle dark mode" }).parentElement);
+    act(() => trigger.focus());
     fireEvent.click(trigger);
     const drawer = screen.getByRole("dialog", { name: "Menu" });
     expect(drawer).toHaveAttribute("data-mx-side", "left");
@@ -177,7 +177,7 @@ it("places the Modal card after Drawer and opens a working confirmation", () => 
     const card = screen.getByRole("article", { name: "Modal" });
     expect(drawer.nextElementSibling).toBe(card);
     const trigger = within(card).getByRole("button", { name: "Open modal" });
-    trigger.focus();
+    act(() => trigger.focus());
     fireEvent.click(trigger);
     const modal = screen.getByRole("dialog", { name: "A little moment" });
     fireEvent.click(within(modal).getByRole("button", { name: "Continue" }));
@@ -302,4 +302,17 @@ it("opens simple Preferences from the menu and keeps choices for the browser ses
   expect(breadcrumbs.getByText("Preferences")).toHaveAttribute("aria-current", "page");
   fireEvent.click(breadcrumbs.getByRole("link", { name: "Dashboard" }));
   expect(screen.getByRole("combobox", { name: "Theme selector" })).toHaveValue("pink");
+});
+
+it("opens the menu with Ctrl/Command K without interfering with writing shortcuts", () => {
+  const first = renderApp();
+  fireEvent.keyDown(document.body, { key: "k", ctrlKey: true });
+  expect(screen.getByRole("dialog", { name: "Menu" })).toBeInTheDocument();
+  first.unmount();
+  renderApp(["/writing-components"]);
+  const input = screen.getByRole("textbox", { name: "Title" });
+  fireEvent.keyDown(input, { key: "k", metaKey: true });
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  fireEvent.keyDown(document.body, { key: "k", metaKey: true });
+  expect(screen.getByRole("dialog", { name: "Menu" })).toBeInTheDocument();
 });
