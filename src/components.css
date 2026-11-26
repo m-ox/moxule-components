@@ -765,8 +765,9 @@
   font: calc(0.95rem * var(--mx-font-scale, 1))/1.65 ui-monospace, SFMono-Regular, Consolas, monospace;
   transition: background-color 160ms ease;
 }
-.mx-markdown-editor-input:hover:not(:disabled):not(:read-only) { background: var(--mx-button-ghost-bg-hover, rgba(63, 97, 143, 0.14)); }
+.mx-markdown-editor-input:hover:not(:disabled):not(:read-only) { background: var(--mx-button-secondary-bg, #d6deea); }
 .mx-markdown-editor-input:focus { outline: 2px solid var(--mx-color-text, #1d3558); outline-offset: -3px; }
+.mx-text-input:focus, .mx-markdown-editor-input:focus { background: var(--mx-button-secondary-bg, #d6deea); }
 .mx-markdown-editor-input:disabled { opacity: 0.5; cursor: not-allowed; }
 .mx-markdown-editor-preview { padding: 1.25rem; min-height: 16rem; }
 .mx-markdown-toolbar[hidden], .mx-markdown-editor-input[hidden], .mx-markdown-editor-preview[hidden] { display: none; }
